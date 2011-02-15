@@ -99,7 +99,7 @@ my %attList = (
     [ 'endtime',     'timestamp',   '',         '0', '' ]
   ],
   student_course =>
-    [ [ 'course_id', 'int', '', 2, '' ], [ 'ssn', 'int', '', 2, '' ] ],
+    [ [ 'ssn', 'int', '', 2, '' ], [ 'course_id', 'int', '', 2, '' ] ],
 );
 
 $classes = $diasql->get_classes_ref(); # no parsing

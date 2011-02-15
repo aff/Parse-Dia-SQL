@@ -190,7 +190,7 @@ use Parse::Dia::SQL::Output::Sas;
 use Parse::Dia::SQL::Output::Sybase;
 use Parse::Dia::SQL::Output::SQLite3;
 
-our $VERSION = '0.16_01';
+our $VERSION = '0.16_02';
 
 my $UML_ASSOCIATION  = 'UML - Association';
 my $UML_SMALLPACKAGE = 'UML - SmallPackage';
@@ -1375,8 +1375,8 @@ sub _parse_association {
     # many-to-many; generate the centre (join) table, its constraints
     # and the classes' primary keys (if needed)
     $ok = $self->generate_many_to_many_association(
-      $assocName,  $leftClass, $leftEnd{'role'},
-      $rightClass, $rightEnd{'role'}
+      $assocName,  $leftClass, $rightEnd{'role'},
+      $rightClass, $leftEnd{'role'}
     );
   }
   else {
@@ -1917,7 +1917,7 @@ sub save_foreign_key {
     $targetTable, $rightEnd,  $constraintAction
     ];
 
-  $self->{log}->debug("save_foreign_key: fk_defs is now: " . Dumper($self->{fk_defs}));
+  $self->{log}->debug("save_foreign_key: fk_defs is now: " . Dumper($self->{fk_defs})) if $self->{log}->is_debug();
 
   return 1;
 }

@@ -24,23 +24,23 @@ my $association_m2m_arrayref = $diasql_m2m->get_associations_ref();
 #diag("association_m2m_arrayref: ".Dumper($association_m2m_arrayref));
 
 my $expected_m2m =  [
-										 [
-											'student_course',
-											'stdn_crs_fk_StntSn',
-											'course_id',
-											'student',
-											'ssn',
-											'on delete cascade'
-										 ],
-										 [
-											'student_course',
-											'lTeT8iBKfXObJYiSrq',
-											'ssn',
-											'course',
-											'course_id',
-											'on delete cascade'
-										 ]
-										];
+		     [
+		      'student_course',
+		      'stdn_crs_fk_StntSn',
+		      'ssn',
+		      'student',
+		      'ssn',
+		      'on delete cascade'
+		     ],
+		     [
+		      'student_course',
+		      'lTeT8iBKfXObJYiSrq',
+		      'course_id',
+		      'course',
+		      'course_id',
+		      'on delete cascade'
+		     ]
+		    ];
 
 
 is_deeply( $association_m2m_arrayref, $expected_m2m );
@@ -66,12 +66,12 @@ my $association_str_m2m = $output_m2m->get_associations_create();
 
 # check 2 foreign keys
 like($association_str_m2m, qr/.*
-															alter \s+ table \s+ student_course \s+ add \s+ constraint \s+ stdn_crs_fk_StntSn \s+ foreign \s+ key \s* \( \s* course_id \s* \) \s+ references \s+ student \s* \( \s* ssn \s* \) \s* on \s+ delete \s+ cascade
-															.*/six);
+			      alter \s+ table \s+ student_course \s+ add \s+ constraint \s+ stdn_crs_fk_StntSn \s+ foreign \s+ key \s* \( \s* ssn \s* \) \s+ references \s+ student \s* \( \s* ssn \s* \) \s* on \s+ delete \s+ cascade
+			      .*/six);
 
 like($association_str_m2m, qr/.*
-															alter \s+ table \s+ student_course \s+ add \s+ constraint \s+ lTeT8iBKfXObJYiSrq \s+ foreign \s+ key \s* \( \s* ssn \s* \) \s* references \s+ course \s+ \s* \( \s* course_id \) \s* on \s+ delete \s+ cascade
-															.*/six);
+			      alter \s+ table \s+ student_course \s+ add \s+ constraint \s+ lTeT8iBKfXObJYiSrq \s+ foreign \s+ key \s* \( \s* course_id \s* \) \s* references \s+ course \s+ \s* \( \s* course_id \) \s* on \s+ delete \s+ cascade
+			      .*/six);
 
 # ------ implicit role ------
 my $diasql_ir =  Parse::Dia::SQL->new( file => catfile(qw(t data implicit_role.dia)), db => 'db2' );
@@ -96,10 +96,10 @@ my $association_str_ir = $output_ir->get_associations_create();
 #diag $association_str_ir;
 
 like($association_str_ir, qr/.*
-														 alter \s+ table \s+ emp \s+ add \s+ constraint \s+ emp_fk_Dept_id 
-														 \s+ foreign \s+ key \s+ \( \s* dept_id \s* \)
-														 \s+ references \s+ dept \s+ \( \s* id \s* \) \s+ ;
-														 .*/six);
+			     alter \s+ table \s+ emp \s+ add \s+ constraint \s+ emp_fk_Dept_id 
+			     \s+ foreign \s+ key \s+ \( \s* dept_id \s* \)
+			     \s+ references \s+ dept \s+ \( \s* id \s* \) \s+ ;
+			     .*/six);
 
 
 __END__

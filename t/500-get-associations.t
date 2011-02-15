@@ -78,7 +78,7 @@ my $expected_many_to_many =  [
           [
             'student_course',
             'stdn_crs_fk_StntSn',
-            'course_id',
+            'ssn',
             'student',
             'ssn',
             'on delete cascade'
@@ -86,7 +86,7 @@ my $expected_many_to_many =  [
           [
             'student_course',
             'lTeT8iBKfXObJYiSrq',
-            'ssn',
+            'course_id',
             'course',
             'course_id',
             'on delete cascade'
@@ -94,7 +94,7 @@ my $expected_many_to_many =  [
         ];
 
 
-is_deeply( $association_many_to_many_arrayref, $expected_many_to_many );
+is_deeply( $association_many_to_many_arrayref, $expected_many_to_many, 'expected_many_to_many' );
 
 #   or diag( q{association_many_to_many_arrayref: }
 #     . Dumper($association_many_to_many_arrayref)
