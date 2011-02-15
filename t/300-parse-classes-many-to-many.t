@@ -1,4 +1,4 @@
-#   $Id: 300-parse-classes-many-to-many.t,v 1.2 2009/02/26 13:49:07 aff Exp $
+#   $Id: 300-parse-classes-many-to-many.t,v 1.3 2011/02/15 20:15:54 aff Exp $
 
 # NOTE: This files has all the tests crammed together as opposed to
 # the others that are using TestERD.dia - consider doing it more

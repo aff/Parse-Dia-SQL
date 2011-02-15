@@ -1,4 +1,4 @@
-#   $Id: 650-output-get-create-associations-many-to-many-097.t,v 1.1 2009/10/01 18:23:55 aff Exp $
+#   $Id: 650-output-get-create-associations-many-to-many-097.t,v 1.2 2011/02/15 20:15:54 aff Exp $
 
 use warnings;
 use strict;

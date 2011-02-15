@@ -1,5 +1,5 @@
 
-#   $Id: 960-rt56357-database-model.t,v 1.2 2010/04/10 12:58:16 aff Exp $
+#   $Id: 961-rt57182-charset.t,v 1.2 2011/02/15 20:15:54 aff Exp $
 
 use warnings;
 use strict;

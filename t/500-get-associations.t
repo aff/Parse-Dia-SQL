@@ -1,4 +1,4 @@
-#   $Id: 500-get-associations.t,v 1.3 2009/04/01 05:12:56 aff Exp $
+#   $Id: 500-get-associations.t,v 1.4 2011/02/15 20:15:54 aff Exp $
 
 use warnings;
 use strict;

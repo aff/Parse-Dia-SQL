@@ -1,6 +1,6 @@
 #!perl
 
-# $Id: parsediasql,v 1.8 2009/11/17 12:21:25 aff Exp $
+# $Id: parsediasql,v 1.9 2011/02/15 20:15:54 aff Exp $
 
 use strict;
 use warnings;

@@ -1,4 +1,4 @@
-#   $Id: 620-output-get-schema-create-many-to-many.t,v 1.4 2009/11/12 09:56:50 aff Exp $
+#   $Id: 621-output-get-schema-create-many-to-many-uml.t,v 1.1 2011/02/15 20:15:54 aff Exp $
 
 use warnings;
 use strict;
