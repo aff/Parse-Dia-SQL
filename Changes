@@ -1,5 +1,15 @@
 Revision history for Perl module Parse::Dia::SQL.
 
+0.16_02 Tue Feb 15 15:48:31 CET 2011
+    - RT #62131 (reported by Felix Ostmann):
+      - Associations incorrectly named in many-to-many 
+        relationships.
+      - Add --uml support. 
+
+0.16_01 Thu May 27 12:09:53 CEST 2010
+    - RT #57842 postgres: serial -> int not working 
+      (reported by shemgp).
+
 0.16 Fri May 21 07:20:43 CEST 2010
     - RT #57182 Encoding for insert statements in UML components 
       (reported by Gaudenz Steinlin).
