@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!perl
 
 # $Id: parsediasql,v 1.8 2009/11/17 12:21:25 aff Exp $
 
@@ -14,19 +14,21 @@ use Parse::Dia::SQL;
 my $help = undef;
 my $file = undef;
 my $ignore_type_mismatch = undef;
-my $db   = undef;
+my $db    = undef;
+my $uml   = undef;
 
 GetOptions(
-  "help|?" => \$help,
-  "file=s" => \$file,
-  "db=s"   => \$db,
-	"ignore_type_mismatch" => \$ignore_type_mismatch, 
-) or pod2usage(2);
+    "help|?" => \$help,
+    "file=s" => \$file,
+    "db=s"   => \$db,
+    "uml"    => \$uml,
+    "ignore_type_mismatch" => \$ignore_type_mismatch, 
+    ) or pod2usage(2);
 pod2usage(1) if $help;
 pod2usage(qq{Missing argument 'file'}) if !$file;
 pod2usage(qq{Missing argument 'db'}) if !$db;
 
-my $dia = Parse::Dia::SQL->new(file => $file, db => $db, ignore_type_mismatch => $ignore_type_mismatch);
+my $dia = Parse::Dia::SQL->new(file => $file, db => $db, ignore_type_mismatch => $ignore_type_mismatch, uml => $uml);
 print $dia->get_sql();
 
 __END__
