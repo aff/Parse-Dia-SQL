@@ -1,0 +1,20 @@
+
+# $Id: AUTHORS,v 1.2 2009/04/01 08:15:36 aff Exp $
+
+Contributing Authors to-date:
+
+Tim Ellis -- Main program, general direction -- mailto: ttiimmeelleessss at tigris dot org
+Martin Gebert, Edward Epstein -- MySQL InnoDB support and Constraint enforcement
+Andrew S. Halper -- Ingres Support
+Greg Copeland -- Bug fixes & patches
+Christopher Bowland -- Windows-without-Cygwin fixes
+Peter Lamb -- UML mode and automatic generation of PK, FK and join tables
+Martin Bögelund -- SAS DB Support (mainly fixing SQL comment style)
+Neal Stephenson -- Macro expasion support (small objects defined once for many tables)
+Paul Suda -- Auto-increment MySQL support
+Mike Ginou -- Debian friendliness and drop index support
+Norbert Volf -- Comments for PostgreSQL support
+Patryk Sciborek -- Datatype equivalence generic algorithm
+
+Andreas Faafeng -- CPAN rewrite, test suite.
+Peter Langton -- SQLite 3 support.

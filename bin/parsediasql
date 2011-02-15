@@ -1,0 +1,83 @@
+#!/usr/bin/perl
+
+# $Id: parsediasql,v 1.8 2009/11/17 12:21:25 aff Exp $
+
+use strict;
+use warnings;
+
+use Getopt::Long;
+use Pod::Usage;
+
+use lib q{lib};
+use Parse::Dia::SQL;
+
+my $help = undef;
+my $file = undef;
+my $ignore_type_mismatch = undef;
+my $db   = undef;
+
+GetOptions(
+  "help|?" => \$help,
+  "file=s" => \$file,
+  "db=s"   => \$db,
+	"ignore_type_mismatch" => \$ignore_type_mismatch, 
+) or pod2usage(2);
+pod2usage(1) if $help;
+pod2usage(qq{Missing argument 'file'}) if !$file;
+pod2usage(qq{Missing argument 'db'}) if !$db;
+
+my $dia = Parse::Dia::SQL->new(file => $file, db => $db, ignore_type_mismatch => $ignore_type_mismatch);
+print $dia->get_sql();
+
+__END__
+
+=pod
+
+=head1 NAME
+
+  parsediasql - Command-line interface to Parse::Dia::SQL
+
+=head1 SYNOPSIS
+
+  parsediasql [OPTIONS] --file FILE --db DB
+
+=head1 OPTIONS
+
+  file -  filename of Dia file
+  db   -  Database type (e.g. 'db2')
+  ignore_type_mismatch - Allows foreign keys to have a different 
+          type than the primary key it references, if true.
+
+=head1 DESCRIPTION
+
+Dia is a diagram creation program for Linux, Unix and Windows released
+under the GPL license.
+
+parsediasql is a Command-line interface to Parse::Dia::SQL
+
+Parse::Dia::SQL converts Dia class diagrams into SQL. 
+
+=head1 TODO
+
+=over 
+
+=item *
+
+Add options that correspond to %param in Parse::Dia::SQL::new
+
+=back
+
+=head1 SEE ALSO
+
+  Parse::Dia::SQL
+
+=head1 AUTHOR
+
+Parse::Dia::SQL is based on I<tedia2sql> by Tim Ellis and others.  See the
+I<AUTHORS> file for details.
+
+Modified by Andreas Faafeng, C<< <aff at cpan.org> >> for release on
+CPAN.
+
+=cut
+

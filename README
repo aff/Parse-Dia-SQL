@@ -1,0 +1,45 @@
+Dia-SQL
+
+Parse::Dia::SQL converts Dia class diagrams into SQL. Dia is a diagram
+creation program for Linux, Unix and Windows released under the 
+GNU General Public License (GPL).
+
+Parse::Dia::SQL is based on tedia2sql by Tim Ellis and others.  See the
+AUTHORS file for details.
+
+INSTALLATION
+
+To install this module, run the following commands:
+
+	perl Makefile.PL
+	make
+	make test 
+	make install
+
+SUPPORT AND DOCUMENTATION
+
+After installing, you can find documentation for this module with the
+perldoc command.
+
+    perldoc Parse::Dia::SQL
+
+You can also look for information at:
+
+    RT, CPAN's request tracker
+        http://rt.cpan.org/NoAuth/Bugs.html?Dist=Parse-Dia-SQL
+
+    AnnoCPAN, Annotated CPAN documentation
+        http://annocpan.org/dist/Parse-Dia-SQL
+
+    CPAN Ratings
+        http://cpanratings.perl.org/d/Parse-Dia-SQL
+
+    Search CPAN
+        http://search.cpan.org/dist/Parse-Dia-SQL
+
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2008 Andreas Faafeng
+
+This program is released under the following license: GPL
