@@ -1,6 +1,6 @@
 package Parse::Dia::SQL::Output;
 
-# $Id: Output.pm,v 1.32 2010/05/21 05:19:36 aff Exp $
+# $Id: Output.pm,v 1.33 2011/02/16 10:23:11 aff Exp $
 
 =pod
 

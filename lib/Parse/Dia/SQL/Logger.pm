@@ -1,6 +1,6 @@
 package Parse::Dia::SQL::Logger;
 
-# $Id: Logger.pm,v 1.8 2010/04/15 20:41:00 aff Exp $
+# $Id: Logger.pm,v 1.9 2011/02/16 10:23:11 aff Exp $
 
 =pod
 
