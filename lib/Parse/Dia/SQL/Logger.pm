@@ -11,7 +11,7 @@ Parse::Dia::SQL::Logger - Wrapper for Log::Log4perl
 =head1 SYNOPSIS
 
     use Parse::Dia::SQL::Logger;
-    my $logger = Parse::Dia::SQL::Logger::->new();
+    my $logger = Parse::Dia::SQL::Logger::->new(loglevel => 'INFO');
     my $log = $logger->get_logger(__PACKAGE__);
     $log->error('error');
     $log->info('info');
@@ -19,14 +19,6 @@ Parse::Dia::SQL::Logger - Wrapper for Log::Log4perl
 =head1 DESCRIPTION
 
 This module is a wrapper around Log::Log4perl. 
-
-=head1 SEE ALSO
-
-  Log::Log4perl
-
-Make appender_thresholds_adjust return number of appenders changed:
-
-  https://rt.cpan.org/Ticket/Display.html?id=43426
 
 =cut
 
@@ -49,10 +41,10 @@ sub new {
 
   my $self = {
     log         => undef,
+    loglevel    => $param{loglevel} || undef,
   };
 
   bless( $self, $class );
-
   $self->_init_log();
   return $self;
 }
@@ -63,34 +55,44 @@ sub _init_log {
   my $self = shift;
 
   # Init logging
-  my $conf = q(
-    # Main logger for Parse::Dia::SQL
-#    log4perl.category.Parse::Dia::SQL        = DEBUG, screen-main
-    log4perl.category.Parse::Dia::SQL        = INFO, screen-main
-    log4perl.appender.screen-main         = Log::Log4perl::Appender::Screen
-    log4perl.appender.screen-main.stderr  = 0
-    log4perl.appender.screen-main.layout  = PatternLayout
-    log4perl.appender.screen-main.layout.ConversionPattern=[%p] %m%n 
+  my $conf = undef;
 
-    # Separate logger for Output::*
-#    log4perl.category.Parse::Dia::SQL::Output  = DEBUG, screen-output
-    log4perl.category.Parse::Dia::SQL::Output  = INFO, screen-output
-    log4perl.appender.screen-output            = Log::Log4perl::Appender::Screen
-    log4perl.appender.screen-output.stderr     = 1
-    log4perl.appender.screen-output.layout     = PatternLayout
-    log4perl.appender.screen-output.layout.ConversionPattern=[%p] %m%n 
-    log4perl.additivity.Parse::Dia::SQL::Output  = 0
+  if ($self->{loglevel}) {
+    $conf = qq(
+      # Loglevel set by user
+      log4perl.category.Parse::Dia::SQL     = $self->{loglevel}, screen-main
+      log4perl.appender.screen-main         = Log::Log4perl::Appender::Screen
+      log4perl.appender.screen-main.stderr  = 1
+      log4perl.appender.screen-main.layout  = PatternLayout
+      log4perl.appender.screen-main.layout.ConversionPattern=[%p] %m%n 
+    );
+  } else {
+    # Default logging
+    $conf = q(
+      # Main logger for Parse::Dia::SQL
+      log4perl.category.Parse::Dia::SQL     = INFO, screen-main
+      log4perl.appender.screen-main         = Log::Log4perl::Appender::Screen
+      log4perl.appender.screen-main.stderr  = 1
+      log4perl.appender.screen-main.layout  = PatternLayout
+      log4perl.appender.screen-main.layout.ConversionPattern=[%p] %m%n 
 
-    # Separate logger for Utils.pm
-#    log4perl.category.Parse::Dia::SQL::Utils  = DEBUG, screen-utils
-    log4perl.category.Parse::Dia::SQL::Utils  = INFO, screen-utils
-    log4perl.appender.screen-utils            = Log::Log4perl::Appender::Screen
-    log4perl.appender.screen-utils.stderr     = 1
-    log4perl.appender.screen-utils.layout     = PatternLayout
-    log4perl.appender.screen-utils.layout.ConversionPattern=[%p] %m%n 
-    log4perl.additivity.Parse::Dia::SQL::Utils  = 0
+      # Separate logger for Output::*
+      log4perl.category.Parse::Dia::SQL::Output  = INFO, screen-output
+      log4perl.appender.screen-output            = Log::Log4perl::Appender::Screen
+      log4perl.appender.screen-output.stderr     = 1
+      log4perl.appender.screen-output.layout     = PatternLayout
+      log4perl.appender.screen-output.layout.ConversionPattern=[%p] %m%n 
+      log4perl.additivity.Parse::Dia::SQL::Output  = 0
 
-  );
+      # Separate logger for Utils.pm
+      log4perl.category.Parse::Dia::SQL::Utils  = INFO, screen-utils
+      log4perl.appender.screen-utils            = Log::Log4perl::Appender::Screen
+      log4perl.appender.screen-utils.stderr     = 1
+      log4perl.appender.screen-utils.layout     = PatternLayout
+      log4perl.appender.screen-utils.layout.ConversionPattern=[%p] %m%n 
+      log4perl.additivity.Parse::Dia::SQL::Utils  = 0
+    );
+  }
   
   Log::Log4perl::init( \$conf );
 
