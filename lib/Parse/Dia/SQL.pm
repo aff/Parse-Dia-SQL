@@ -190,7 +190,7 @@ use Parse::Dia::SQL::Output::Sas;
 use Parse::Dia::SQL::Output::Sybase;
 use Parse::Dia::SQL::Output::SQLite3;
 
-our $VERSION = '0.16_02';
+our $VERSION = '0.17';
 
 my $UML_ASSOCIATION  = 'UML - Association';
 my $UML_SMALLPACKAGE = 'UML - SmallPackage';
@@ -241,6 +241,7 @@ sub new {
     diaversion     => $param{diaversion} || undef,
     ignore_type_mismatch => $param{ignore_type_mismatch} || undef,
     converted            => 0,
+    loglevel    => $param{loglevel} || undef,
   };
 
   bless($self, $class);
@@ -264,7 +265,7 @@ sub new {
 # Initialize logger
 sub _init_log {
   my $self = shift;
-  my $logger = Parse::Dia::SQL::Logger::->new();
+  my $logger = Parse::Dia::SQL::Logger::->new(loglevel => $self->{loglevel});
   $self->{log} = $logger->get_logger(__PACKAGE__);
   return 1;
 }
@@ -282,6 +283,7 @@ sub _init_utils {
   $self->{utils} = Parse::Dia::SQL::Utils::->new(
     db         => $self->{db},
     default_pk => $self->{default_pk},
+    loglevel   => $self->{loglevel},
   );
   return 1;
 }
@@ -315,7 +317,7 @@ sub get_output_instance {
   # Add some args to param unless they are set by caller
   %param =
     map { $param{$_} = $self->{$_} unless exists($param{$_}); $_ => $param{$_} }
-      qw(classes associations small_packages components files index_options typemap);
+      qw(classes associations small_packages components files index_options typemap loglevel);
 
   if ($self->{db} eq q{db2}) {
   return Parse::Dia::SQL::Output::DB2->new(%param);
