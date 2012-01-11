@@ -796,6 +796,21 @@ sub _get_create_table_sql {
   }
   $self->{log}->debug("columns:" .Dumper(\@columns)) ;
 
+  # Add custom table postfix options if 'comment' section is defined
+  $self->{log}->debug("table comment:" .Dumper($table->{comment})) ;
+  if ($table->{comment}) {
+
+	# Use comment only if it starts with given database type:
+	if ($table->{comment} =~ m/^$self->{db}:\s*(.*)$/) {
+	  # Remove db-type
+	  my $table_comment = $1;
+
+	  # TODO: Add error checks on 'comment' input
+	  $self->{table_postfix_options} = [ $table_comment ]; 
+	}
+
+  }
+
   return
       qq{create table }
     . $table->{name} . " ("

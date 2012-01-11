@@ -21,7 +21,7 @@ LICENSE
 Makefile.PL
 MANIFEST
 MANIFEST.SKIP
-META.yml			Module meta-data (added by MakeMaker)
+META.yml
 README
 t/000-load.t
 t/001-new.t
@@ -80,6 +80,7 @@ t/686-output-sas-get-sql.t
 t/687-output-mysql-innodb-get-sql.t
 t/688-output-mysql-myisam-get-sql.t
 t/689-output-db2-create-constraint-name.t
+t/689-output-mysql-innodb-get-sql-comment.t
 t/690-output-sqlite3-get-sql.t
 t/700-utils-load.t
 t/701-utils-mangle-name.t
@@ -120,6 +121,7 @@ t/data/rt53783.dia
 t/data/rt56357.dia
 t/data/rt57842.dia
 t/data/table.col.comment.dia
+t/data/table_output_options.dia
 t/data/TestERD.dia
 t/data/typemap.dia
 t/data/version.supported.dia

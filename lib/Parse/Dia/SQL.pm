@@ -47,6 +47,10 @@ See L<http://tedia2sql.tigris.org/usingtedia2sql.html>
 
 =item * Preliminary support for Dia's I<database> shapes is added. 
 
+=item * Table comments are used as I<table postfix options>.  This
+means per-table options (e.g. partitioning options) are supported on a
+per-database level.
+
 =back
 
 =head1 DIA VERSIONS
@@ -190,7 +194,7 @@ use Parse::Dia::SQL::Output::Sas;
 use Parse::Dia::SQL::Output::Sybase;
 use Parse::Dia::SQL::Output::SQLite3;
 
-our $VERSION = '0.17';
+our $VERSION = '0.18';
 
 my $UML_ASSOCIATION  = 'UML - Association';
 my $UML_SMALLPACKAGE = 'UML - SmallPackage';

@@ -1,5 +1,9 @@
 Revision history for Perl module Parse::Dia::SQL.
 
+0.18 Wed Jan 11 15:45:42 CET 2012
+    - Added support for table options (see
+      t/data/table_output_options.dia)
+
 0.17 Wed Feb 16 11:02:44 CET 2011
     - RT #58189: Enable log level in command line arguments.
 	(reported by ELACOUR@cpan.org) 
