@@ -53,6 +53,7 @@ t/620-output-get-schema-create-many-to-many.t
 t/620-output-get-schema-create.t
 t/621-output-get-create-table-sql.t
 t/621-output-get-schema-create-many-to-many-uml.t
+t/621-output-get-schema-create-mysql-innodb-backticks.t
 t/622-output-get-create-view-sql.t
 t/623-output-get-view-create.t
 t/640-output-get-schema-drop-sql.t

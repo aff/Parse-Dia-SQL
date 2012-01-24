@@ -87,6 +87,7 @@ sub new {
     small_packages => $param{small_packages} || [],
     typemap        => $param{typemap}        || {},    # custom type mapping 
     loglevel       => $param{loglevel} || undef,
+    backticks      => $param{backticks} || undef,      # MySQL-InnoDB only
 
     # references to components
     log   => undef,

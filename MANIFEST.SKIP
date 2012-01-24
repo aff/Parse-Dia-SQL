@@ -40,3 +40,7 @@
 
 # Skip debian directory
 \bdebian\b
+
+MYMETA.json
+MYMETA.yml
+
