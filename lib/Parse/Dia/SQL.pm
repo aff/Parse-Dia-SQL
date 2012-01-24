@@ -51,6 +51,8 @@ See L<http://tedia2sql.tigris.org/usingtedia2sql.html>
 means per-table options (e.g. partitioning options) are supported on a
 per-database level.
 
+=item * I<backticks> notation is supported for MySQL-InnoDB.
+
 =back
 
 =head1 DIA VERSIONS

@@ -17,25 +17,28 @@ my $ignore_type_mismatch = undef;
 my $db                   = undef;
 my $uml                  = undef;
 my $loglevel             = undef;
+my $backticks            = undef;
 
 GetOptions(
-    "help|?"               => \$help,
-    "file=s"               => \$file,
-    "db=s"                 => \$db,
-    "uml"                  => \$uml,
-    "loglevel=s"           => \$loglevel,
-    "ignore_type_mismatch" => \$ignore_type_mismatch,
+  "help|?"               => \$help,
+  "file=s"               => \$file,
+  "db=s"                 => \$db,
+  "uml"                  => \$uml,
+  "loglevel=s"           => \$loglevel,
+  "backticks=i"          => \$backticks,
+  "ignore_type_mismatch" => \$ignore_type_mismatch,
 ) or pod2usage(2);
 pod2usage(1) if $help;
 pod2usage(qq{Missing argument 'file'}) if !$file;
 pod2usage(qq{Missing argument 'db'}) if !$db;
 
 my $dia = Parse::Dia::SQL->new(
-    file                 => $file,
-    db                   => $db,
-    ignore_type_mismatch => $ignore_type_mismatch,
-    uml                  => $uml,
-    loglevel             => $loglevel
+  file                 => $file,
+  db                   => $db,
+  ignore_type_mismatch => $ignore_type_mismatch,
+  uml                  => $uml,
+  loglevel             => $loglevel,
+  backticks            => $backticks
 );
 print $dia->get_sql();
 
