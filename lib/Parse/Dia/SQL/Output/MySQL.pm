@@ -27,7 +27,7 @@ use Data::Dumper;
 use File::Spec::Functions qw(catfile);
 
 use lib q{lib};
-use base q{Parse::Dia::SQL::Output}; # extends
+use base q{Parse::Dia::SQL::Output};    # extends
 
 require Parse::Dia::SQL::Logger;
 require Parse::Dia::SQL::Const;
@@ -39,14 +39,14 @@ The constructor.
 =cut
 
 sub new {
-  my ( $class, %param ) = @_;
+  my ($class, %param) = @_;
   my $self = {};
 
   # Set defaults for MySQL (common for all storage engines)
   $param{object_name_max_length} = $param{object_name_max_length} || 64;
   $self = $class->SUPER::new(%param);
 
-  bless( $self, $class );
+  bless($self, $class);
   return $self;
 }
 
@@ -60,8 +60,14 @@ keep the interface consistent.
 =cut
 
 sub _get_drop_index_sql {
-  my ( $self, $tablename, $indexname ) = @_;
-  return qq{drop index $indexname on $tablename}
+  my ($self, $tablename, $indexname) = @_;
+
+  # Add backticks if option is set and dbtype is correct
+  $indexname = $self->_quote_identifier($indexname);
+  $tablename = $self->_quote_identifier($tablename);
+
+  return
+      qq{drop index $indexname on $tablename}
     . $self->{end_of_statement}
     . $self->{newline};
 }
@@ -78,27 +84,31 @@ sub get_schema_drop {
   my $self   = shift;
   my $sqlstr = '';
 
-	return unless $self->_check_classes();
+  return unless $self->_check_classes();
 
- CLASS:
+CLASS:
   foreach my $object (@{ $self->{classes} }) {
-		next CLASS if ($object->{type} ne q{table});
+    next CLASS if ($object->{type} ne q{table});
 
-		# Sanity checks on internal state
-		if (!defined($object) || ref($object) ne q{HASH} || !exists( $object->{name} )) {
-			$self->{log}->error( q{Error in table input - cannot create drop table sql!} );
-			next;
-		}
+    # Sanity checks on internal state
+    if (!defined($object)
+      || ref($object) ne q{HASH}
+      || !exists($object->{name}))
+    {
+      $self->{log}
+        ->error(q{Error in table input - cannot create drop table sql!});
+      next;
+    }
 
-		$sqlstr .= qq{drop table if exists }
-    . $object->{name}
-    . $self->{end_of_statement}
-    . $self->{newline};
+    $sqlstr .=
+        qq{drop table if exists }
+      . $self->_quote_identifier($object->{name})
+      . $self->{end_of_statement}
+      . $self->{newline};
   }
 
   return $sqlstr;
 }
-
 
 1;
 

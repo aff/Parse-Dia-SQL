@@ -28,7 +28,6 @@ each RDBMS.
 
 =cut
 
-
 use warnings;
 use strict;
 use open qw/:std :utf8/;
@@ -55,7 +54,7 @@ The constructor.  Arguments:
 =cut
 
 sub new {
-  my ( $class, %param ) = @_;
+  my ($class, %param) = @_;
 
   my $self = {
 
@@ -78,23 +77,24 @@ sub new {
     index_options          => $param{index_options}          || [],
     object_name_max_length => $param{object_name_max_length} || undef,
     table_postfix_options  => $param{table_postfix_options}  || [],
-    table_postfix_options_separator  => $param{table_postfix_options_separator}  || ' ',
+    table_postfix_options_separator => $param{table_postfix_options_separator}
+      || ' ',
 
     # parsed datastructures
-    associations   => $param{associations}   || [],    # foreign keys, indices
-    classes        => $param{classes}        || [],    # tables and views
-    components     => $param{components}     || [],    # insert statements
+    associations   => $param{associations}   || [],      # foreign keys, indices
+    classes        => $param{classes}        || [],      # tables and views
+    components     => $param{components}     || [],      # insert statements
     small_packages => $param{small_packages} || [],
-    typemap        => $param{typemap}        || {},    # custom type mapping 
-    loglevel       => $param{loglevel} || undef,
-    backticks      => $param{backticks} || undef,      # MySQL-InnoDB only
+    typemap        => $param{typemap}        || {},      # custom type mapping
+    loglevel       => $param{loglevel}       || undef,
+    backticks      => $param{backticks}      || undef,   # MySQL-InnoDB only
 
     # references to components
     log   => undef,
     const => undef,
     utils => undef,
   };
-  bless( $self, $class );
+  bless($self, $class);
 
   $self->_init_log();
   $self->_init_const();
@@ -102,8 +102,6 @@ sub new {
 
   return $self;
 }
-
-
 
 # Initialize logger
 sub _init_log {
@@ -124,8 +122,8 @@ sub _init_const {
 sub _init_utils {
   my $self = shift;
   $self->{utils} = Parse::Dia::SQL::Utils::->new(
-      db       => $self->{db},
-      loglevel => $self->{loglevel},
+    db       => $self->{db},
+    loglevel => $self->{loglevel},
   );
   return 1;
 }
@@ -149,18 +147,18 @@ sub _get_comment {
     [ q{Generated at}, scalar localtime() ],
   );
 
-	# Add typemap for given database
- 	my $typemap_str = "not found in input file";
-	if (exists( $self->{typemap}->{ $self->{db} })) {
- 		$typemap_str = "found in input file";
- 	}
- 	push @arr, ["Typemap for " . $self->{db}, $typemap_str]; 
+  # Add typemap for given database
+  my $typemap_str = "not found in input file";
+  if (exists($self->{typemap}->{ $self->{db} })) {
+    $typemap_str = "found in input file";
+  }
+  push @arr, [ "Typemap for " . $self->{db}, $typemap_str ];
 
   # Add the sql_comment to first sub-element of all elements
-  @arr = map { $_->[0] = $self->{sql_comment}. $_->[0]; $_ } @arr;
+  @arr = map { $_->[0] = $self->{sql_comment} . $_->[0]; $_ } @arr;
 
   my $tb = Text::Table->new();
-  $tb->load( @arr );
+  $tb->load(@arr);
 
   return scalar $tb->table();
 }
@@ -189,49 +187,49 @@ sub get_sql {
   ## No critic (NoWarnings)
   no warnings q{uninitialized};
   return
-	  $self->_get_comment()
+      $self->_get_comment()
     . $self->{newline}
-    .  "-- get_constraints_drop "
+    . "-- get_constraints_drop "
     . $self->{newline}
     . $self->get_constraints_drop()
     . $self->{newline}
-    .  "-- get_permissions_drop "
+    . "-- get_permissions_drop "
     . $self->{newline}
     . $self->get_permissions_drop()
     . $self->{newline}
-    .  "-- get_view_drop"
+    . "-- get_view_drop"
     . $self->{newline}
     . $self->get_view_drop()
     . $self->{newline}
-    .  "-- get_schema_drop"
+    . "-- get_schema_drop"
     . $self->{newline}
     . $self->get_schema_drop()
     . $self->{newline}
-    .  "-- get_smallpackage_pre_sql "
+    . "-- get_smallpackage_pre_sql "
     . $self->{newline}
     . $self->get_smallpackage_pre_sql()
     . $self->{newline}
-    .  "-- get_schema_create"
+    . "-- get_schema_create"
     . $self->{newline}
     . $self->get_schema_create()
     . $self->{newline}
-    .  "-- get_view_create"
+    . "-- get_view_create"
     . $self->{newline}
     . $self->get_view_create()
     . $self->{newline}
-    .  "-- get_permissions_create"
+    . "-- get_permissions_create"
     . $self->{newline}
     . $self->get_permissions_create()
     . $self->{newline}
-    .  "-- get_inserts"
+    . "-- get_inserts"
     . $self->{newline}
     . $self->get_inserts()
     . $self->{newline}
-    .  "-- get_smallpackage_post_sql"
+    . "-- get_smallpackage_post_sql"
     . $self->{newline}
     . $self->get_smallpackage_post_sql()
     . $self->{newline}
-    .  "-- get_associations_create"
+    . "-- get_associations_create"
     . $self->{newline}
     . $self->get_associations_create();
 }
@@ -247,11 +245,11 @@ sub get_inserts {
   # Expect array ref of hash refs
   return unless $self->_check_components();
 
-  $self->{log}->debug( Dumper( $self->{components} ) )
+  $self->{log}->debug(Dumper($self->{components}))
     if $self->{log}->is_debug;
 
-  foreach my $component ( @{ $self->{components} } ) {
-    foreach my $vals ( split( "\n", $component->{text} ) ) {
+  foreach my $component (@{ $self->{components} }) {
+    foreach my $vals (split("\n", $component->{text})) {
 
       $sqlstr .=
           qq{insert into }
@@ -264,7 +262,6 @@ sub get_inserts {
 
   return $sqlstr;
 }
-
 
 # Drop all constraints (e.g. foreign keys and indices)
 #
@@ -303,67 +300,71 @@ sub _get_fk_drop {
 # Drop all indices
 sub _get_index_drop {
   my $self   = shift;
-    my $sqlstr = q{};
+  my $sqlstr = q{};
 
   return unless $self->_check_classes();
 
-    # drop index
-    foreach my $table (@{$self->{classes}}) {
+  # drop index
+  foreach my $table (@{ $self->{classes} }) {
 
-        foreach my $operation ( @{ $table->{ops} }) {
+    foreach my $operation (@{ $table->{ops} }) {
 
-            if (ref($operation) ne 'ARRAY') {
-                $self->{log}->error( q{Error in ops input - expect an ARRAY ref, got } . ref($operation));
-                next OPERATION;
-            }
+      if (ref($operation) ne 'ARRAY') {
+        $self->{log}->error(
+          q{Error in ops input - expect an ARRAY ref, got } . ref($operation));
+        next OPERATION;
+      }
 
-            my ($opname,$optype) = ($operation->[0], $operation->[1]);
+      my ($opname, $optype) = ($operation->[0], $operation->[1]);
 
-            # 2nd element can be index, unique index, grant, etc
-            next if ($optype !~ qr/^(unique )?index$/i);
+      # 2nd element can be index, unique index, grant, etc
+      next if ($optype !~ qr/^(unique )?index$/i);
 
-            $sqlstr .= $self->_get_drop_index_sql($table->{name}, $opname);
-        }
+      $sqlstr .= $self->_get_drop_index_sql($table->{name}, $opname);
     }
+  }
   return $sqlstr;
 }
-
-
-
 
 # Create drop index for index on table with given name.  Note that the
 # tablename is not used here, but many of the overriding subclasses use
 # it, so we include both the tablename and the indexname as arguments to
 # keep the interface consistent.
 sub _get_drop_index_sql {
-  my ( $self, $tablename, $indexname ) = @_;
-  return qq{drop index $indexname}
+  my ($self, $tablename, $indexname) = @_;
+
+  return
+      qq{drop index $indexname}
     . $self->{end_of_statement}
     . $self->{newline};
 }
-
 
 # Create drop view for all views
 sub get_view_drop {
   my $self   = shift;
   my $sqlstr = '';
 
-    return unless $self->_check_classes();
+  return unless $self->_check_classes();
 
- CLASS:
+CLASS:
   foreach my $object (@{ $self->{classes} }) {
-        next CLASS if ($object->{type} ne q{view});
+    next CLASS if ($object->{type} ne q{view});
 
-        # Sanity checks on internal state
-        if (!defined($object) || ref($object) ne q{HASH} || !exists( $object->{name} )) {
-            $self->{log}->error( q{Error in table input - cannot create drop table sql!} );
-            next;
-        }
+    # Sanity checks on internal state
+    if (!defined($object)
+      || ref($object) ne q{HASH}
+      || !exists($object->{name}))
+    {
+      $self->{log}
+        ->error(q{Error in table input - cannot create drop table sql!});
+      next;
+    }
 
-        $sqlstr .= qq{drop view }
-    . $object->{name}
-    . $self->{end_of_statement}
-    . $self->{newline};
+    $sqlstr .=
+        qq{drop view }
+      . $object->{name}
+      . $self->{end_of_statement}
+      . $self->{newline};
   }
 
   return $sqlstr;
@@ -379,7 +380,8 @@ sub get_view_drop {
 #
 # otherwise false.
 sub _check_components {
-  my $self   = shift;
+  my $self = shift;
+
   # Sanity checks on internal state
   if (!defined($self->{components})) {
     $self->{log}->warn(q{no components in schema});
@@ -392,21 +394,23 @@ sub _check_components {
     return;
   }
 
-    foreach my $comp (@{ $self->{components} }) {
-        if (ref($comp) ne q{HASH}) {
-            $self->{log}->warn(q{component element must be a HASH ref});
-            return;
-        }
-        if (!exists($comp->{text}) ||
-              !exists($comp->{name})) {
-            $self->{log}->warn(q{component element must be a HASH ref with elements 'text' and 'name'});
-            return;
-        }
+  foreach my $comp (@{ $self->{components} }) {
+    if (ref($comp) ne q{HASH}) {
+      $self->{log}->warn(q{component element must be a HASH ref});
+      return;
     }
+    if ( !exists($comp->{text})
+      || !exists($comp->{name}))
+    {
+      $self->{log}->warn(
+        q{component element must be a HASH ref with elements 'text' and 'name'}
+      );
+      return;
+    }
+  }
 
-    return 1;
+  return 1;
 }
-
 
 # Sanity check on internal state.
 #
@@ -417,7 +421,8 @@ sub _check_components {
 #
 # otherwise false.
 sub _check_classes {
-  my $self   = shift;
+  my $self = shift;
+
   # Sanity checks on internal state
   if (!defined($self->{classes})) {
     $self->{log}->warn(q{no classes in schema});
@@ -430,12 +435,13 @@ sub _check_classes {
     return;
   }
 
- 	if (grep(!defined($_), (@{ $self->{classes}}))) {
-		$self->{log}->warn(q{the classes array reference contains an undefined element!});
-		return;
-	}
+  if (grep(!defined($_), (@{ $self->{classes} }))) {
+    $self->{log}
+      ->warn(q{the classes array reference contains an undefined element!});
+    return;
+  }
 
-	return 1;
+  return 1;
 }
 
 # Sanity check on internal state.
@@ -447,7 +453,8 @@ sub _check_classes {
 #
 # otherwise false.
 sub _check_associations {
-  my $self   = shift;
+  my $self = shift;
+
   # Sanity checks on internal state
   if (!defined($self->{associations})) {
     $self->{log}->warn(q{no associations in schema});
@@ -460,8 +467,7 @@ sub _check_associations {
     return;
   }
 
-
-    return 1;
+  return 1;
 }
 
 # Sanity check on given reference.
@@ -478,11 +484,11 @@ sub _check_attlist {
   my $arg  = shift;
 
   # Sanity checks on internal state
-  if ( !defined($arg) || ref($arg) ne q{HASH} || !exists( $arg->{name} ) ) {
+  if (!defined($arg) || ref($arg) ne q{HASH} || !exists($arg->{name})) {
     $self->{log}->error(q{Error in ref input!});
     return;
   }
-  if ( !exists( $arg->{attList} ) || ref( $arg->{attList} ) ne 'ARRAY' ) {
+  if (!exists($arg->{attList}) || ref($arg->{attList}) ne 'ARRAY') {
     $self->{log}->error(q{Error in ref attList input!});
     return;
   }
@@ -493,13 +499,15 @@ sub _check_small_packages {
   my $self = shift;
 
   # Sanity checks on internal state
-  if ( !defined($self->{small_packages}) || ref($self->{small_packages}) ne q{ARRAY})  {
+  if (!defined($self->{small_packages})
+    || ref($self->{small_packages}) ne q{ARRAY})
+  {
     $self->{log}->error(q{small_packages error});
     return;
   }
-  my %seen = (); # Check for duplicate entries
+  my %seen = ();    # Check for duplicate entries
 
-  foreach my $sp (@{$self->{small_packages}}) {
+  foreach my $sp (@{ $self->{small_packages} }) {
     if (ref($sp) ne 'HASH') {
       $self->{log}->error(q{Error in small_package input!});
       return;
@@ -507,14 +515,14 @@ sub _check_small_packages {
     ++$seen{$_} for (keys %{$sp});
   }
   foreach my $key (keys %seen) {
-    $self->{log}->info(qq{Duplicate entry in small_package for key '$key' (} . $seen{$key} . q{ times)})
+    $self->{log}->info(qq{Duplicate entry in small_package for key '$key' (}
+        . $seen{$key}
+        . q{ times)})
       if $seen{$key} > 1;
   }
 
   return 1;
 }
-
-
 
 # create drop table for all tables
 #
@@ -523,22 +531,27 @@ sub get_schema_drop {
   my $self   = shift;
   my $sqlstr = '';
 
-    return unless $self->_check_classes();
+  return unless $self->_check_classes();
 
- CLASS:
+CLASS:
   foreach my $object (@{ $self->{classes} }) {
-        next CLASS if ($object->{type} ne q{table});
+    next CLASS if ($object->{type} ne q{table});
 
-        # Sanity checks on internal state
-        if (!defined($object) || ref($object) ne q{HASH} || !exists( $object->{name} )) {
-            $self->{log}->error( q{Error in table input - cannot create drop table sql!} );
-            next;
-        }
+    # Sanity checks on internal state
+    if (!defined($object)
+      || ref($object) ne q{HASH}
+      || !exists($object->{name}))
+    {
+      $self->{log}
+        ->error(q{Error in table input - cannot create drop table sql!});
+      next;
+    }
 
-        $sqlstr .= qq{drop table }
-    . $object->{name}
-    . $self->{end_of_statement}
-    . $self->{newline};
+    $sqlstr .=
+        qq{drop table }
+      . $object->{name}
+      . $self->{end_of_statement}
+      . $self->{newline};
   }
 
   return $sqlstr;
@@ -550,31 +563,35 @@ sub get_permissions_drop {
   my $self   = shift;
   my $sqlstr = '';
 
-    # Check classes
-    return unless $self->_check_classes();
+  # Check classes
+  return unless $self->_check_classes();
 
-    # loop through classes looking for grants
-    foreach my $table (@{$self->{classes}}) {
+  # loop through classes looking for grants
+  foreach my $table (@{ $self->{classes} }) {
 
-        foreach my $operation ( @{ $table->{ops} }) {
+    foreach my $operation (@{ $table->{ops} }) {
 
-            if (ref($operation) ne 'ARRAY') {
-                $self->{log}->error( q{Error in ops input - expect an ARRAY ref, got } . ref($operation));
-                next OPERATION;
-            }
+      if (ref($operation) ne 'ARRAY') {
+        $self->{log}->error(
+          q{Error in ops input - expect an ARRAY ref, got } . ref($operation));
+        next OPERATION;
+      }
 
-            my ($opname,$optype,$colref) = ($operation->[0],$operation->[1],$operation->[2]);
+      my ($opname, $optype, $colref) =
+        ($operation->[0], $operation->[1], $operation->[2]);
 
-            # 2nd element can be index, unique index, grant, etc
-            next if ($optype ne q{grant});
+      # 2nd element can be index, unique index, grant, etc
+      next if ($optype ne q{grant});
 
-            $sqlstr .=
-                qq{revoke $opname on } . $table->{name} . q{ from }
-                    . join(q{,},@{$colref})
-                        . $self->{end_of_statement}
-                            . $self->{newline};
-        }
+      $sqlstr .=
+          qq{revoke $opname on }
+        . $table->{name}
+        . q{ from }
+        . join(q{,}, @{$colref})
+        . $self->{end_of_statement}
+        . $self->{newline};
     }
+  }
 
   return $sqlstr;
 
@@ -585,31 +602,34 @@ sub get_permissions_create {
   my $self   = shift;
   my $sqlstr = '';
 
-    # Check classes
-    return unless $self->_check_classes();
+  # Check classes
+  return unless $self->_check_classes();
 
-    # loop through classes looking for grants
-    foreach my $table (@{$self->{classes}}) {
+  # loop through classes looking for grants
+  foreach my $table (@{ $self->{classes} }) {
 
-        foreach my $operation ( @{ $table->{ops} }) {
+    foreach my $operation (@{ $table->{ops} }) {
 
-            if (ref($operation) ne 'ARRAY') {
-                $self->{log}->error( q{Error in ops input - expect an ARRAY ref, got } . ref($operation));
-                next OPERATION;
-            }
+      if (ref($operation) ne 'ARRAY') {
+        $self->{log}->error(
+          q{Error in ops input - expect an ARRAY ref, got } . ref($operation));
+        next OPERATION;
+      }
 
-            my ($opname,$optype,$colref) = ($operation->[0],$operation->[1],$operation->[2]);
+      my ($opname, $optype, $colref) =
+        ($operation->[0], $operation->[1], $operation->[2]);
 
-            # 2nd element can be index, unique index, grant, etc
-            next if ($optype ne q{grant});
+      # 2nd element can be index, unique index, grant, etc
+      next if ($optype ne q{grant});
 
-            $sqlstr .=
-                qq{$optype $opname on } . $table->{name} . q{ to }
-                    . join(q{,},@{$colref})
-                        . $self->{end_of_statement}
-                            . $self->{newline};
-        }
+      $sqlstr .=
+          qq{$optype $opname on }
+        . $table->{name} . q{ to }
+        . join(q{,}, @{$colref})
+        . $self->{end_of_statement}
+        . $self->{newline};
     }
+  }
 
   return $sqlstr;
 }
@@ -624,22 +644,22 @@ sub get_associations_create {
   my $self   = shift;
   my $sqlstr = '';
 
-	# Check both ass. (fk) and classes (index) before operating on the
-	# array refs.
+  # Check both ass. (fk) and classes (index) before operating on the
+  # array refs.
 
-	# indices
-	if ($self->_check_classes()) {
-		foreach my $object (@{ $self->{classes} }) {
-			$sqlstr .= $self->_get_create_index_sql($object);
-		}
-	}
+  # indices
+  if ($self->_check_classes()) {
+    foreach my $object (@{ $self->{classes} }) {
+      $sqlstr .= $self->_get_create_index_sql($object);
+    }
+  }
 
-	# foreign keys
-	if ($self->_check_associations()) {
-		foreach my $object (@{ $self->{associations} }) {
-			$sqlstr .= $self->_get_create_association_sql($object);
-		}
-	}
+  # foreign keys
+  if ($self->_check_associations()) {
+    foreach my $object (@{ $self->{associations} }) {
+      $sqlstr .= $self->_get_create_association_sql($object);
+    }
+  }
 
   return $sqlstr;
 }
@@ -649,12 +669,12 @@ sub get_schema_create {
   my $self   = shift;
   my $sqlstr = '';
 
-    return unless $self->_check_classes();
+  return unless $self->_check_classes();
 
- CLASS:
+CLASS:
   foreach my $object (@{ $self->{classes} }) {
-        next CLASS if ($object->{type} ne q{table});
-        $sqlstr .= $self->_get_create_table_sql($object);
+    next CLASS if ($object->{type} ne q{table});
+    $sqlstr .= $self->_get_create_table_sql($object);
   }
 
   return $sqlstr;
@@ -665,17 +685,16 @@ sub get_view_create {
   my $self   = shift;
   my $sqlstr = '';
 
-	return unless $self->_check_classes();
+  return unless $self->_check_classes();
 
- VIEW:
+VIEW:
   foreach my $object (@{ $self->{classes} }) {
-        next VIEW if ($object->{type} ne q{view});
-        $sqlstr .= $self->_get_create_view_sql($object);
+    next VIEW if ($object->{type} ne q{view});
+    $sqlstr .= $self->_get_create_view_sql($object);
   }
 
   return $sqlstr;
 }
-
 
 # Create primary key clause, e.g.
 #
@@ -684,26 +703,27 @@ sub get_view_create {
 # Returns undefined if list of primary key is empty (i.e. if there are
 # no primary keys on given table).
 sub _create_pk_string {
-  my ( $self, $tablename, @pks ) = @_;
+  my ($self, $tablename, @pks) = @_;
 
-  if ( !$tablename ) {
-    $self->{log}->error(q{Missing argument tablename - cannot create pk string!});
+  if (!$tablename) {
+    $self->{log}
+      ->error(q{Missing argument tablename - cannot create pk string!});
     return;
   }
 
   # Return undefined if list of primary key is empty
-  if ( scalar(@pks) == 0) {
+  if (scalar(@pks) == 0) {
     $self->{log}->debug(qq{table '$tablename' has no primary keys});
     return;
   }
 
-  return qq{constraint pk_$tablename primary key (} . join( q{,}, @pks ) . q{)};
+  return qq{constraint pk_$tablename primary key (} . join(q{,}, @pks) . q{)};
 }
 
 # Create sql for given table.  Use _format_columns() to
 # format columns nicely (without the comment column)
 sub _get_create_table_sql {
-  my ( $self, $table ) = @_;
+  my ($self, $table) = @_;
   my @columns      = ();
   my @primary_keys = ();
   my @comments     = ();
@@ -711,12 +731,18 @@ sub _get_create_table_sql {
   # Sanity checks on table ref
   return unless $self->_check_attlist($table);
 
+  # Save the original table name (in case backticks are added)
+  my $original_table_name = $table->{name};
+
+  # Add backticks if option is set and dbtype is correct
+  $table->{name} = $self->_quote_identifier($table->{name});
+
   # Check not null and primary key property for each column. Column
   # visibility is given in $columns[3]. A value of 2 in this field
   # signifies a primary key (which also must be defined as 'not null'.
-  foreach my $column ( @{ $table->{attList} } ) {
+  foreach my $column (@{ $table->{attList} }) {
 
-    if ( ref($column) ne 'ARRAY' ) {
+    if (ref($column) ne 'ARRAY') {
       $self->{log}
         ->error(q{Error in view attList input - expect an ARRAY ref!});
       next COLUMN;
@@ -728,55 +754,58 @@ sub _get_create_table_sql {
     ## no critic (ProhibitNoWarnings)
     no warnings q{uninitialized};
 
-    $self->{log}->debug( "column before: " . join( q{,}, @$column ) );
+    $self->{log}->debug("column before: " . join(q{,}, @$column));
 
     # Field sequence:
-    my ( $col_name, $col_type, $col_val, $col_vis, $col_com ) = @$column;
+    my ($col_name, $col_type, $col_val, $col_vis, $col_com) = @$column;
 
     # Add 'not null' if field is primary key
-    if ( $col_vis == 2 ) {
+    if ($col_vis == 2) {
       $col_val = 'not null';
     }
 
     # Add column name to list of primary keys if $col_vis == 2
-    push @primary_keys, $col_name if ( $col_vis == 2 );
+    push @primary_keys, $col_name if ($col_vis == 2);
 
     # Add 'default' keyword to defined values different from (not)
     # null when the column is not a primary key:
     # TODO: Special handling for SAS (in subclass)
-    if ( $col_val ne q{} && $col_val !~ /^(not )?null$/i && $col_vis != 2 ) {
+    if ($col_val ne q{} && $col_val !~ /^(not )?null$/i && $col_vis != 2) {
       $col_val = qq{ default $col_val};
     }
 
     # Prefix non-empty comments with the comment character
     $col_com = $self->{sql_comment} . qq{ $col_com} if $col_com;
 
-		if (!$self->{typemap}) {
-			$self->{log}->debug("no typemap");
-		}
+    if (!$self->{typemap}) {
+      $self->{log}->debug("no typemap");
+    }
 
-		if (exists( $self->{typemap}->{ $self->{db} })) {
-			# typemap replace
-			$col_type = $self->map_user_type($col_type);
-		} else {
-			$self->{log}->debug("no typemap for " . $self->{db});
-		}
+    if (exists($self->{typemap}->{ $self->{db} })) {
+      # typemap replace
+      $col_type = $self->map_user_type($col_type);
+    } else {
+      $self->{log}->debug("no typemap for " . $self->{db});
+    }
 
-    $self->{log}->debug( "column after : "
-        . join( q{,}, $col_name, $col_type, $col_val, $col_com ) );
+    # Add backticks to column name if option is enabled
+    $col_name = $self->_quote_identifier($col_name);
+
+    $self->{log}->debug(
+      "column after : " . join(q{,}, $col_name, $col_type, $col_val, $col_com));
 
     # Create a line with out the comment
-    push @columns,  [ $col_name, $col_type, $col_val];
+    push @columns, [ $col_name, $col_type, $col_val ];
 
     # Comments are added separately *after* comma on each line
-    push @comments, $col_com;  # possibly undef
+    push @comments, $col_com;    # possibly undef
   }
   $self->{log}->warn("No columns in table") if !scalar @columns;
 
   # Format columns nicely (without the comment column)
   @columns = $self->_format_columns(@columns);
-  $self->{log}->debug("columns:" .Dumper(\@columns)) ;
-  $self->{log}->debug("comments:" .Dumper(\@comments)) ;
+  $self->{log}->debug("columns:" . Dumper(\@columns));
+  $self->{log}->debug("comments:" . Dumper(\@comments));
 
   # Add comma + newline + indent between the lines.
   # Note that _create_pk_string can return undef.
@@ -785,30 +814,32 @@ sub _get_create_table_sql {
       /$self->{newline}/,
       join(
         $self->{column_separator} . $self->{newline} . $self->{indent},
-        @columns, $self->_create_pk_string( $table->{name}, @primary_keys )
+        @columns, $self->_create_pk_string($original_table_name, @primary_keys)
       )
     )
   );
+
   # Add the comment column, ensure the comma comes before the comment (if any)
   {
     ## no critic (ProhibitNoWarnings)
     no warnings q{uninitialized};
     @columns = map { $_ . shift(@comments) } @columns;
   }
-  $self->{log}->debug("columns:" .Dumper(\@columns)) ;
+  $self->{log}->debug("columns:" . Dumper(\@columns));
 
   # Add custom table postfix options if 'comment' section is defined
-  $self->{log}->debug("table comment:" .Dumper($table->{comment})) ;
+  $self->{log}->debug("table comment:" . Dumper($table->{comment}));
   if ($table->{comment}) {
 
-	# Use comment only if it starts with given database type:
-	if ($table->{comment} =~ m/^$self->{db}:\s*(.*)$/) {
-	  # Remove db-type
-	  my $table_comment = $1;
+    # Use comment only if it starts with given database type:
+    if ($table->{comment} =~ m/^$self->{db}:\s*(.*)$/) {
 
-	  # TODO: Add error checks on 'comment' input
-	  $self->{table_postfix_options} = [ $table_comment ]; 
-	}
+      # Remove db-type
+      my $table_comment = $1;
+
+      # TODO: Add error checks on 'comment' input
+      $self->{table_postfix_options} = [$table_comment];
+    }
 
   }
 
@@ -822,9 +853,9 @@ sub _get_create_table_sql {
     . $self->{newline} . ")"
     . $self->{indent}
     . join(
-        $self->{table_postfix_options_separator},
-        @{ $self->{table_postfix_options} }
-      )
+    $self->{table_postfix_options_separator},
+    @{ $self->{table_postfix_options} }
+    )
     . $self->{end_of_statement}
     . $self->{newline};
 }
@@ -834,21 +865,23 @@ sub _get_create_table_sql {
 #  Input:  arrayref of arrayrefs
 #  Output: arrayref of arrayrefs
 sub _format_columns {
-  my ( $self, @columns ) = @_;
-    my @columns_out = ();
+  my ($self, @columns) = @_;
+  my @columns_out = ();
 
-  $self->{log}->debug("input: " . Dumper(\@columns)) if $self->{log}->is_debug();
+  $self->{log}->debug("input: " . Dumper(\@columns))
+    if $self->{log}->is_debug();
 
   my $tb = Text::Table->new();
-  $tb->load( @columns );
+  $tb->load(@columns);
 
-    # Take out one by one the formatted columns, remove newline character
-    push @columns_out, map { s/\n//g; $_ } $tb->body($_) for (0 .. $tb->body_height());
+  # Take out one by one the formatted columns, remove newline character
+  push @columns_out, map { s/\n//g; $_ } $tb->body($_)
+    for (0 .. $tb->body_height());
 
-  $self->{log}->debug("output: " . Dumper(@columns_out)) if $self->{log}->is_debug();
-    return @columns_out;
+  $self->{log}->debug("output: " . Dumper(@columns_out))
+    if $self->{log}->is_debug();
+  return @columns_out;
 }
-
 
 # Create sql for given view.
 #
@@ -864,174 +897,183 @@ sub _get_create_view_sql {
   my @columns = ();
   my @from    = ();
   my @where   = ();
-    my @orderby = ();
-    my @groupby = ();
+  my @orderby = ();
+  my @groupby = ();
 
-    # Sanity checks on view ref
-    return unless $self->_check_attlist($view);
+  # Sanity checks on view ref
+  return unless $self->_check_attlist($view);
 
-  COLUMN:
-  foreach my $column ( @{ $view->{attList} } ) {
-        $self->{log}->debug(q{column: }.Dumper($column));
+COLUMN:
+  foreach my $column (@{ $view->{attList} }) {
+    $self->{log}->debug(q{column: } . Dumper($column));
 
-        if (ref($column) ne 'ARRAY') {
-            $self->{log}->error( q{Error in view attList input - expect an ARRAY ref, got } . ref($column));
-            next COLUMN;
-        }
-
-        my $col_name = $column->[0]; # Pick first column
-        $self->{log}->debug(qq{col_name: $col_name});
-
-    push @columns,
-      join( q{ }, $col_name )
-      ;    # TODO: remove trailing whitespace
-  }
-
-  OPERATION:
-  foreach my $operation ( @{ $view->{ops} } ) {
-        $self->{log}->debug($view->{name} . q{: operation: }.Dumper($operation));
-
-        if (ref($operation) ne 'ARRAY') {
-            $self->{log}->error( q{Error in view attList input - expect an ARRAY ref, got } . ref($operation));
-            next OPERATION;
-        }
-
-        my ($opname,$optype) = ($operation->[0],$operation->[1]);
-
-        # skip grants
-        next OPERATION if $optype eq q{grant};
-        if ($optype eq q{from}) {
-            push @from, $opname;
-        } elsif ($optype eq q{where}) {
-            push @where, $opname;
-        } elsif ($optype eq q{order by}) {
-            push @orderby, $opname;
-        } elsif ($optype eq q{group by}) {
-            push @groupby, $opname;
-        } else {
-            # unsupported view operation type
-            $self->{log}->warn( qq{ unsupported view operation type '$optype'});
-        }
+    if (ref($column) ne 'ARRAY') {
+      $self->{log}
+        ->error(q{Error in view attList input - expect an ARRAY ref, got }
+          . ref($column));
+      next COLUMN;
     }
 
+    my $col_name = $column->[0];    # Pick first column
+    $self->{log}->debug(qq{col_name: $col_name});
 
-  my $retval = qq{create view }
-    . $view->{name} . q{ as select }
+    push @columns, join(q{ }, $col_name);    # TODO: remove trailing whitespace
+  }
+
+OPERATION:
+  foreach my $operation (@{ $view->{ops} }) {
+    $self->{log}->debug($view->{name} . q{: operation: } . Dumper($operation));
+
+    if (ref($operation) ne 'ARRAY') {
+      $self->{log}
+        ->error(q{Error in view attList input - expect an ARRAY ref, got }
+          . ref($operation));
+      next OPERATION;
+    }
+
+    my ($opname, $optype) = ($operation->[0], $operation->[1]);
+
+    # skip grants
+    next OPERATION if $optype eq q{grant};
+    if ($optype eq q{from}) {
+      push @from, $opname;
+    } elsif ($optype eq q{where}) {
+      push @where, $opname;
+    } elsif ($optype eq q{order by}) {
+      push @orderby, $opname;
+    } elsif ($optype eq q{group by}) {
+      push @groupby, $opname;
+    } else {
+
+      # unsupported view operation type
+      $self->{log}->warn(qq{ unsupported view operation type '$optype'});
+    }
+  }
+
+  my $retval =
+      qq{create view }
+    . $view->{name}
+    . q{ as select }
     . $self->{newline}
     . $self->{indent}
-    . join( $self->{column_separator} , @columns )
+    . join($self->{column_separator}, @columns)
     . $self->{newline}
     . $self->{indent}
     . q{ from }
-    . join( $self->{column_separator} , @from )
+    . join($self->{column_separator}, @from)
     . $self->{newline}
     . $self->{indent};
 
   # optional values
   $retval .=
       q{ where }
-    . join( $self->{newline} . $self->{indent}, @where )
+    . join($self->{newline} . $self->{indent}, @where)
     . $self->{newline}
     . $self->{indent}
-      if (scalar(@where));
-  $retval .=
-      q{ group by }
-    . join( $self->{column_separator} , @groupby )
-      if (scalar(@groupby));
-  $retval .=
-      q{ order by }
-    . join( $self->{column_separator} , @orderby )
-      if (scalar(@orderby));
+    if (scalar(@where));
+  $retval .= q{ group by } . join($self->{column_separator}, @groupby)
+    if (scalar(@groupby));
+  $retval .= q{ order by } . join($self->{column_separator}, @orderby)
+    if (scalar(@orderby));
 
   # add semi colon or equivalent
-  $retval .=
-      $self->{end_of_statement}
-    . $self->{newline};
-    if ($self->{log}->is_debug()) {
-        $self->{log}->debug(q{view: $retval});
-    }
+  $retval .= $self->{end_of_statement} . $self->{newline};
+  if ($self->{log}->is_debug()) {
+    $self->{log}->debug(q{view: $retval});
+  }
   return $retval;
 }
-
 
 # Create sql for given association.
 sub _get_create_association_sql {
   my ($self, $association) = @_;
 
-    # Sanity checks on input
-    if ( ref( $association ) ne 'ARRAY') {
-    $self->{log}->error( q{Error in association input - cannot create association sql!} );
-        return;
-    }
+  # Sanity checks on input
+  if (ref($association) ne 'ARRAY') {
+    $self->{log}
+      ->error(q{Error in association input - cannot create association sql!});
+    return;
+  }
 
-    my (
-            $table_name, $constraint_name, $key_column,
-            $ref_table,  $ref_column,      $constraint_action
-         ) = @{$association};
+  my (
+    $table_name, $constraint_name, $key_column,
+    $ref_table,  $ref_column,      $constraint_action
+  ) = @{$association};
 
   # Shorten constraint name, if necessary (DB2 only)
   $constraint_name = $self->_create_constraint_name($constraint_name);
 
-    return
-            qq{alter table $table_name add constraint $constraint_name }
-      . $self->{newline}
-      . $self->{indent}
-      . qq{ foreign key ($key_column)}
-      . $self->{newline}
-      . $self->{indent}
-      . qq{ references $ref_table ($ref_column) $constraint_action}
-      . $self->{end_of_statement}
-      . $self->{newline};
+  # Add backticks to column name if option is enabled
+  $ref_table = $self->_quote_identifier($ref_table);
+
+  return
+      qq{alter table $table_name add constraint $constraint_name }
+    . $self->{newline}
+    . $self->{indent}
+    . qq{ foreign key ($key_column)}
+    . $self->{newline}
+    . $self->{indent}
+    . qq{ references $ref_table ($ref_column) $constraint_action}
+    . $self->{end_of_statement}
+    . $self->{newline};
 }
 
 # Added only so that it can be overridden (e.g. in DB2.pm)
 sub _create_constraint_name {
-  my ( $self, $tablename ) = @_;
+  my ($self, $tablename) = @_;
   return if !$tablename;
   return $tablename;
 }
 
-
 # Create sql for all indices for given table.
 sub _get_create_index_sql {
   my ($self, $table) = @_;
-    my $sqlstr = q{};
+  my $sqlstr = q{};
 
-    # Sanity checks on input
-    if ( ref( $table ) ne 'HASH') {
-    $self->{log}->error( q{Error in table input - cannot create index sql!} );
-        return;
+  # Sanity checks on input
+  if (ref($table) ne 'HASH') {
+    $self->{log}->error(q{Error in table input - cannot create index sql!});
+    return;
+  }
+
+OPERATION:
+  foreach my $operation (@{ $table->{ops} }) {
+
+    if (ref($operation) ne 'ARRAY') {
+      $self->{log}->error(
+        q{Error in ops input - expect an ARRAY ref, got } . ref($operation));
+      next OPERATION;
     }
 
- OPERATION:
-    foreach my $operation ( @{ $table->{ops} }) {
+    # Extract elements (the stereotype is not in use)
+    my ($opname, $optype, $colref, $opstereotype, $opcomment) = (
+      $operation->[0], $operation->[1], $operation->[2],
+      $operation->[3], $operation->[4]
+    );
 
-        if (ref($operation) ne 'ARRAY') {
-            $self->{log}->error( q{Error in ops input - expect an ARRAY ref, got } . ref($operation));
-            next OPERATION;
-        }
+    # 2nd element can be index, unique index, grant, etc.
+    # Accept "index" only in this context.
+    if ($optype !~ qr/^(unique )?index$/i) {
+      $self->{log}->debug(qq{Skipping optype '$optype' - not (unique) index});
+      next OPERATION;
+    }
 
-				# Extract elements (the stereotype is not in use)
-        my ($opname,$optype,$colref,$opstereotype,$opcomment) = ($operation->[0],$operation->[1],$operation->[2],$operation->[3],$operation->[4]);
+    # Use operation comment as index option if defined, otherwise
+    # use default (if any)
+    my $idx_opt =
+      (defined $opcomment && $opcomment ne q{})
+      ? $opcomment
+      : join(q{,}, @{ $self->{index_options} });
 
-        # 2nd element can be index, unique index, grant, etc. 
-				# Accept "index" only in this context. 
-        if ($optype !~ qr/^(unique )?index$/i) {
-					$self->{log}->debug( qq{Skipping optype '$optype' - not (unique) index});
-					next OPERATION;
-				}
-				# Use operation comment as index option if defined, otherwise
-				# use default (if any)
-				my $idx_opt = (defined $opcomment && $opcomment ne q{}) ? $opcomment : join(q{,},@{$self->{index_options}});
-
-        $sqlstr .=
-            qq{create $optype $opname on } . $table->{name}
-      . q{ (} . join(q{,},@{$colref}) . q{) }
+    $sqlstr .=
+        qq{create $optype $opname on }
+      . $table->{name} . q{ (}
+      . join(q{,}, @{$colref}) . q{) }
       . $idx_opt
       . $self->{end_of_statement}
       . $self->{newline};
-    }
-    return $sqlstr;
+  }
+  return $sqlstr;
 }
 
 # Common function for all smallpackage statements. Returns statements
@@ -1044,16 +1086,17 @@ sub _get_smallpackage_sql {
   return unless $self->_check_small_packages();
 
   # Each small package is a hash ref
-  foreach my $sp ( @{ $self->{small_packages} } ) {
+  foreach my $sp (@{ $self->{small_packages} }) {
+
     # Foreach key in hash, pick those values whose
     # keys that contains db name and 'keyword':
-    if ( $table_name )
-    {
-      push @statements, map { $sp->{$_} } grep( /$self->{db}.*:\s*$keyword\s*\($table_name\)/, keys %{$sp} );
-    }
-    else
-    {
-      push @statements, map { $sp->{$_} } grep( /$self->{db}.*:\s*$keyword/, keys %{$sp} );
+    if ($table_name) {
+      push @statements,
+        map { $sp->{$_} }
+        grep(/$self->{db}.*:\s*$keyword\s*\($table_name\)/, keys %{$sp});
+    } else {
+      push @statements,
+        map { $sp->{$_} } grep(/$self->{db}.*:\s*$keyword/, keys %{$sp});
     }
   }
   return join($self->{newline}, @statements);
@@ -1061,86 +1104,82 @@ sub _get_smallpackage_sql {
 }
 
 # Add SQL statements BEFORE generated code
-sub get_smallpackage_pre_sql  {
+sub get_smallpackage_pre_sql {
   my $self = shift;
   return $self->_get_smallpackage_sql(q{pre});
 }
 
 # Add SQL statements AFTER generated code
 sub get_smallpackage_post_sql {
-  my $self   = shift;
+  my $self = shift;
   return $self->_get_smallpackage_sql(q{post});
 }
 
 # SQL clauses to add at the end of the named table definitions
-sub get_smallpackage_table_sql  {
+sub get_smallpackage_table_sql {
   my $self = shift;
   return $self->{log}->logdie("NOTIMPL");
 }
 
 # SQL clauses to add at the end of the named table primary key
 # constraints
-sub get_smallpackage_pk_sql  {
+sub get_smallpackage_pk_sql {
   my $self = shift;
   return $self->{log}->logdie("NOTIMPL");
 }
 
 # SQL clauses to add at the end of the named table column definitions
-sub get_smallpackage_column_sql  {
+sub get_smallpackage_column_sql {
   my $self = shift;
   my ($table_name) = @_;
 
   my $clause = $self->_get_smallpackage_sql(q{columns}, $table_name);
 
-  if ( $clause ne '' )
-  {
+  if ($clause ne '') {
     $clause =~ s/\n(.*?)/\n$self->{indent}$1/g;
-    $clause = ','
-      . $self->{newline}
-      . $self->{indent}
-      . $clause;
+    $clause = ',' . $self->{newline} . $self->{indent} . $clause;
     return $clause;
   }
   return '';
 }
 
 # SQL clauses to add at the end of the named table index definitions
-sub get_smallpackage_index_sql  {
+sub get_smallpackage_index_sql {
   my $self = shift;
   return $self->{log}->logdie("NOTIMPL");
 }
 
 # store macro for generating statements BEFORE generated code
-sub get_smallpackage_macropre_sql  {
-  my $self = shift;
-  return $self->{log}->logdie("NOTIMPL");
-}
-# store macro for generating statements AFTER generated code
-sub get_smallpackage_macropost_sql  {
+sub get_smallpackage_macropre_sql {
   my $self = shift;
   return $self->{log}->logdie("NOTIMPL");
 }
 
+# store macro for generating statements AFTER generated code
+sub get_smallpackage_macropost_sql {
+  my $self = shift;
+  return $self->{log}->logdie("NOTIMPL");
+}
 
 # typemap replace
 sub map_user_type {
-  my ( $self, $col_type ) = @_;
+  my ($self, $col_type) = @_;
 
   return $col_type if !$self->{typemap};
-  return $col_type if !exists( $self->{typemap}->{ $self->{db} } );
+  return $col_type if !exists($self->{typemap}->{ $self->{db} });
 
   #$self->{log}->debug("typemap: " . Dumper($self->{typemap}));
 
-  my ( $orgname, $orgsize ) = $self->{utils}->split_type($col_type);
+  my ($orgname, $orgsize) = $self->{utils}->split_type($col_type);
 
   #return $col_type if !exists( $self->{typemap}->{ $self->{db} }->{$orgname} );
 
-  if ( exists( $self->{typemap}->{ $self->{db} }->{$orgname} ) ) {
+  if (exists($self->{typemap}->{ $self->{db} }->{$orgname})) {
 
     my $arref = $self->{typemap}->{ $self->{db} }->{$orgname};
 
     no warnings q[uninitialized];
-    my ( $newname, $newsize ) = @$arref;
+    my ($newname, $newsize) = @$arref;
 
     #$self->{log}->debug("typemap arref match: " . Dumper($arref));
 
@@ -1155,14 +1194,20 @@ sub map_user_type {
 
     # else error
     $self->{log}
-      ->error( qq[Error in typemap usage: Cannot map from $col_type to $newname]
-        . $newsize );
+      ->error(qq[Error in typemap usage: Cannot map from $col_type to $newname]
+        . $newsize);
   }
 
   # Return the original type is we can't find a typemap replacement
   return $col_type;
 }
 
+# Add quotes (backticks) to identifier if option is set and db-type
+# supports it (i.e. mysql-innodb).  See also Output/MySQL/InnoDB.pm
+sub _quote_identifier {
+  my ($self, $identifier) = @_;
+  return $identifier;
+}
 
 1;
 

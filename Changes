@@ -1,5 +1,8 @@
 Revision history for Perl module Parse::Dia::SQL.
 
+0.20 
+    - Added `backticks` to constraint creation, drop table, drop index. 
+
 0.19 Tue Jan 24 13:19:12 CET 2012
     - Added `backticks` support for MySQL-InnoDB.
 

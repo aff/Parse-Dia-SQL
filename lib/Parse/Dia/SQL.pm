@@ -196,7 +196,7 @@ use Parse::Dia::SQL::Output::Sas;
 use Parse::Dia::SQL::Output::Sybase;
 use Parse::Dia::SQL::Output::SQLite3;
 
-our $VERSION = '0.19';
+our $VERSION = '0.20';
 
 my $UML_ASSOCIATION  = 'UML - Association';
 my $UML_SMALLPACKAGE = 'UML - SmallPackage';
