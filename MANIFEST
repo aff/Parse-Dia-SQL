@@ -62,6 +62,8 @@ t/642-output-get-drop-associations-sql.t
 t/643-output-get-drop-permissions-sql.t
 t/644-output-mysql-get-drop-index-sql.t
 t/645-output-ingres-get-drop-index-sql.t
+t/645-output-mysql-innodb-get-drop-index-sql.t
+t/646-output-get-schema-drop-sql-mysql-innodb.t
 t/650-output-get-create-associations-many-to-many-097.t
 t/650-output-get-create-associations-many-to-many.t
 t/650-output-get-create-associations.t
@@ -78,6 +80,7 @@ t/683-output-oracle-get-sql.t
 t/684-output-ingres-get-sql.t
 t/685-output-postgres-get-sql.t
 t/686-output-sas-get-sql.t
+t/687-output-mysql-innodb-get-sql-alter-table-backticks.t
 t/687-output-mysql-innodb-get-sql.t
 t/688-output-mysql-myisam-get-sql.t
 t/689-output-db2-create-constraint-name.t
