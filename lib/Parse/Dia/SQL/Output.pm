@@ -74,9 +74,12 @@ sub new {
     sql_comment      => $param{sql_comment}      || "-- ",
 
     # sql options
-    index_options          => $param{index_options}          || [],
-    object_name_max_length => $param{object_name_max_length} || undef,
-    table_postfix_options  => $param{table_postfix_options}  || [],
+    index_options => $param{index_options}
+      || [],
+    object_name_max_length => $param{object_name_max_length}
+      || undef,
+    table_postfix_options => $param{table_postfix_options}
+      || [],
     table_postfix_options_separator => $param{table_postfix_options_separator}
       || ' ',
 
@@ -583,9 +586,12 @@ sub get_permissions_drop {
       # 2nd element can be index, unique index, grant, etc
       next if ($optype ne q{grant});
 
+      # Add backticks if option is set and dbtype is correct
+      my $tablename = $self->_quote_identifier($table->{name});
+
       $sqlstr .=
           qq{revoke $opname on }
-        . $table->{name}
+        . $tablename
         . q{ from }
         . join(q{,}, @{$colref})
         . $self->{end_of_statement}
@@ -622,9 +628,12 @@ sub get_permissions_create {
       # 2nd element can be index, unique index, grant, etc
       next if ($optype ne q{grant});
 
+      # Add backticks if option is set and dbtype is correct
+      my $tablename = $self->_quote_identifier($table->{name});
+
       $sqlstr .=
           qq{$optype $opname on }
-        . $table->{name} . q{ to }
+        . $tablename . q{ to }
         . join(q{,}, @{$colref})
         . $self->{end_of_statement}
         . $self->{newline};
@@ -782,6 +791,7 @@ sub _get_create_table_sql {
     }
 
     if (exists($self->{typemap}->{ $self->{db} })) {
+
       # typemap replace
       $col_type = $self->map_user_type($col_type);
     } else {
@@ -1005,7 +1015,7 @@ sub _get_create_association_sql {
 
   # Add backticks to table names if option is enabled
   $table_name = $self->_quote_identifier($table_name);
-  $ref_table = $self->_quote_identifier($ref_table);
+  $ref_table  = $self->_quote_identifier($ref_table);
 
   return
       qq{alter table $table_name add constraint $constraint_name }
@@ -1092,8 +1102,7 @@ sub _get_smallpackage_sql {
     # Foreach key in hash, pick those values whose
     # keys that contains db name and 'keyword':
     if ($table_name) {
-      push @statements,
-        map { $sp->{$_} }
+      push @statements, map { $sp->{$_} }
         grep(/$self->{db}.*:\s*$keyword\s*\($table_name\)/, keys %{$sp});
     } else {
       push @statements,

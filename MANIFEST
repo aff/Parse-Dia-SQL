@@ -59,6 +59,7 @@ t/623-output-get-view-create.t
 t/640-output-get-schema-drop-sql.t
 t/641-output-get-drop-view-sql.t
 t/642-output-get-drop-associations-sql.t
+t/643-output-get-drop-permissions-sql-innodb-backticks.t
 t/643-output-get-drop-permissions-sql.t
 t/644-output-mysql-get-drop-index-sql.t
 t/645-output-ingres-get-drop-index-sql.t
@@ -69,6 +70,7 @@ t/650-output-get-create-associations-many-to-many.t
 t/650-output-get-create-associations.t
 t/651-output-get-create-associations-sybase.t
 t/652-output-get-create-associations-index-options.t
+t/660-output-get-create-permissions-sql-innodb-backticks.t
 t/660-output-get-create-permissions-sql.t
 t/670-output-get-pre-sql.t
 t/671-output-get-post-sql.t
