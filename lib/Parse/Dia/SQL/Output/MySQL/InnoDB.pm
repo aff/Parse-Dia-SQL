@@ -69,6 +69,10 @@ sub _get_fk_drop {
     my ($table_name, $constraint_name, undef, undef, undef, undef) =
       @{$association};
 
+    # Add backticks to column name if option is enabled
+    $table_name = $self->_quote_identifier($table_name);
+    $constraint_name = $self->_quote_identifier($constraint_name);
+
     $sqlstr .=
         qq{alter table $table_name drop foreign key $constraint_name }
       . $self->{end_of_statement}

@@ -1003,7 +1003,8 @@ sub _get_create_association_sql {
   # Shorten constraint name, if necessary (DB2 only)
   $constraint_name = $self->_create_constraint_name($constraint_name);
 
-  # Add backticks to column name if option is enabled
+  # Add backticks to table names if option is enabled
+  $table_name = $self->_quote_identifier($table_name);
   $ref_table = $self->_quote_identifier($ref_table);
 
   return

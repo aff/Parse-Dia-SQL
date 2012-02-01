@@ -30,11 +30,11 @@ isa_ok(
   q{Expect Parse::Dia::SQL::Output::MySQL::InnoDB to be used as back-end}
 );
 
-diag($sql);
+#diag($sql);
 
 # Check for backticks:
 like($sql, qr/.*
-alter \s+ table \s+ userAttribute \s+ add \s+ constraint \s+ fk_acua  \s+ 
+alter \s+ table \s+ `userAttribute` \s+ add \s+ constraint \s+ fk_acua  \s+ 
     foreign \s+ key \s+ \( \s* attributeCategory_id \s* \) \s+ 
     references \s+ `attributeCategory` \s+ \( \s* id \s* \) \s* ;
 .*/six);

@@ -9,7 +9,7 @@ use Test::Exception;
 use File::Spec::Functions;
 use lib catdir qw ( blib lib );
 
-plan tests => 41;
+plan tests => 48;
 
 use lib q{lib};
 use_ok ('Parse::Dia::SQL');
@@ -94,6 +94,36 @@ can_ok($output, 'get_constraints_drop');
 $drop_constraints = $output->get_constraints_drop();
 
 #diag($drop_constraints);
+
+# foreign keys
+like($drop_constraints, qr/.*
+alter \s+ table \s+ `imageCategoryList` \s+ drop \s+ foreign \s+ key \s+ `fk_iiicl` \s* (;)?
+.*/six);
+
+like($drop_constraints, qr/.*
+alter \s+ table \s+ `imageAttribute` \s+ drop \s+ foreign \s+ key \s+ `fk_iiia` \s* (;)?
+.*/six);
+
+like($drop_constraints, qr/.*
+alter \s+ table \s+ `userImageRating` \s+ drop \s+ foreign \s+ key \s+ `fk_uiuir` \s* (;)?
+.*/six);
+
+like($drop_constraints, qr/.*
+alter \s+ table \s+ `userAttribute` \s+ drop \s+ foreign \s+ key \s+ `fk_uiua` \s* (;)?
+.*/six);
+
+like($drop_constraints, qr/.*
+alter \s+ table \s+ `userSession` \s+ drop \s+ foreign \s+ key \s+ `fk_uius` \s* (;)?
+.*/six);
+
+like($drop_constraints, qr/.*
+alter \s+ table \s+ `imageAttribute` \s+ drop \s+ foreign \s+ key \s+ `fk_iaac` \s* (;)?
+.*/six);
+
+like($drop_constraints, qr/.*
+alter \s+ table \s+ `userAttribute` \s+ drop \s+ foreign \s+ key \s+ `fk_acua` \s* (;)?
+.*/six);
+
 
 # indices
 like($drop_constraints, qr/.*
