@@ -185,16 +185,17 @@ use Parse::Dia::SQL::Const;
 use Parse::Dia::SQL::Output;
 
 use Parse::Dia::SQL::Output::DB2;
-use Parse::Dia::SQL::Output::Ingres;
+use Parse::Dia::SQL::Output::HTML;
 use Parse::Dia::SQL::Output::Informix;
+use Parse::Dia::SQL::Output::Ingres;
 use Parse::Dia::SQL::Output::MySQL::InnoDB;
 use Parse::Dia::SQL::Output::MySQL::MyISAM;
 use Parse::Dia::SQL::Output::MySQL;
 use Parse::Dia::SQL::Output::Oracle;
 use Parse::Dia::SQL::Output::Postgres;
+use Parse::Dia::SQL::Output::SQLite3;
 use Parse::Dia::SQL::Output::Sas;
 use Parse::Dia::SQL::Output::Sybase;
-use Parse::Dia::SQL::Output::SQLite3;
 
 our $VERSION = '0.20';
 
@@ -249,6 +250,7 @@ sub new {
     converted            => 0,
     loglevel    => $param{loglevel} || undef,
     backticks   => $param{backticks} || undef,      # MySQL-InnoDB only
+    htmlformat  => $param{htmlformat} || '',        # HTML output only
   };
 
   bless($self, $class);
@@ -324,7 +326,7 @@ sub get_output_instance {
   # Add some args to param unless they are set by caller
   %param =
     map { $param{$_} = $self->{$_} unless exists($param{$_}); $_ => $param{$_} }
-      qw(classes associations small_packages components files index_options typemap loglevel backticks);
+      qw(classes associations small_packages components files index_options typemap loglevel backticks htmlformat);
 
   if ($self->{db} eq q{db2}) {
   return Parse::Dia::SQL::Output::DB2->new(%param);
@@ -346,6 +348,8 @@ sub get_output_instance {
     return Parse::Dia::SQL::Output::Sas->new(%param);
   } elsif ($self->{db} eq q{sqlite3}) {
     return Parse::Dia::SQL::Output::SQLite3->new(%param);
+  } elsif ($self->{db} eq q{html}) {
+    return Parse::Dia::SQL::Output::HTML->new(%param);
   }
 
   return $self->{log}->logdie(qq{Failed to get instance for } . $self->{db});
@@ -870,7 +874,10 @@ sub _parse_database_table {
       $self->{utils}
       ->get_value_from_object( $singleAttrib, "dia:attribute", "name", "comment",
       "string", 1 );
-    $attribComment =~ s/\n/ /g;
+
+	# Strip newlines from comments except for HTML output
+    $attribComment =~ s/\n/ /g if ($self->{db} ne q{html});
+	chomp($attribComment); # Always strip any trailing newlines
 
     $self->{log}->debug(
     "attribute: $attribName - $attribType - $attribVal - $attrib_is_primary_key"
@@ -1016,7 +1023,10 @@ sub _parse_class {
       $self->{utils}
       ->get_value_from_object( $singleAttrib, "dia:attribute", "name", "comment",
       "string", 1 );
-    $attribComment =~ s/\n/ /g;
+
+	# Strip newlines from comments except for HTML output
+    $attribComment =~ s/\n/ /g if ($self->{db} ne q{html});
+	chomp($attribComment); # Always strip any trailing newlines
 
     $self->{log}->debug(
     "attribute: $attribName - $attribType - $attribVal - $attribVisibility"

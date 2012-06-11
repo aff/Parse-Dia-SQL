@@ -1,12 +1,12 @@
 package Parse::Dia::SQL::Output::HTML;
 
-# $Id: SQLite3.pm,v 1.5 2009/05/14 09:42:47 aff Exp $
+# $Id: $
 
 =pod
 
 =head1 NAME
 
-Parse::Dia::SQL::Output::HTML - Create HTMl documentation.
+Parse::Dia::SQL::Output::HTML - Create HTML documentation.
 
 =head1 SYNOPSIS
 
@@ -18,13 +18,15 @@ Parse::Dia::SQL::Output::HTML - Create HTMl documentation.
 
 This sub-class creates HTML formatted database documentation.
 
-HTML formatting is controlled by templates selected with the optional I<format> parameter which
-supplies a format file. See L</"HTML formats"> for more.
+HTML formatting is controlled by templates selected with the optional
+I<format> parameter which supplies a format file. See L</"HTML
+formats"> for more.
 
 The generated HTML is intended to be useful rather than beautiful.
 
-This sub-class follows the same structure as the rdbms output sub-classes with the intent of maintaining
-consistency, even though this give less than optimum efficiency.
+This sub-class follows the same structure as the rdbms output
+sub-classes with the intent of maintaining consistency, even though
+this give less than optimum efficiency.
 
 =cut
 

@@ -32,6 +32,7 @@ use Parse::Dia::SQL::Logger;
 my %MAX_NAME_LEN = (
   default  => 30,
   db2      => 18,
+  html     => 64,
   innodb   => 64,
   mysql    => 64,
   oracle   => 30,

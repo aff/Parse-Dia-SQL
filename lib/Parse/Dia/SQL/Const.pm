@@ -30,21 +30,23 @@ use Parse::Dia::SQL::Logger;
 # List of supported relational database management systems
 my @RDBMS = qw (
   db2
+  html
   informix
   ingres
   innodb
   mssql
-  mysql-myisam
   mysql-innodb
+  mysql-myisam
   oracle
   postgres
   sas
-  sybase
   sqlite3
+  sybase
 );
 
 my %OUTPUT_CLASS = (
   'db2'          => 'Parse::Dia::SQL::Output::DB2',
+  'html'         => 'Parse::Dia::SQL::Output::HTML',
   'informix'     => 'Parse::Dia::SQL::Output::Informix',
   'ingres'       => 'Parse::Dia::SQL::Output::Ingres',
   'innodb'       => 'Parse::Dia::SQL::Output::InnoDB',
@@ -54,8 +56,8 @@ my %OUTPUT_CLASS = (
   'oracle'       => 'Parse::Dia::SQL::Output::Oracle',
   'postgres'     => 'Parse::Dia::SQL::Output::Postgres',
   'sas'          => 'Parse::Dia::SQL::Output::SAS',
-  'sybase'       => 'Parse::Dia::SQL::Output::Sybase',
   'sqlite3'      => 'Parse::Dia::SQL::Output::SQLite3',
+  'sybase'       => 'Parse::Dia::SQL::Output::Sybase',
 );
 
 # Each statement type must be generated in correct order

@@ -1,4 +1,4 @@
-#   $Id: 691-output-html-get-sql.t,v 1.2 2009/04/01 08:14:19 aff Exp $
+#   $Id:  $
 
 use warnings;
 use strict;
@@ -23,6 +23,8 @@ my $diasql =
 isa_ok($diasql, q{Parse::Dia::SQL}, q{Expect a Parse::Dia::SQL object});
 can_ok($diasql, q{get_sql});
 my $sql = $diasql->get_sql();
+
+# diag($sql);
 
 isa_ok(
   $diasql->get_output_instance(),
