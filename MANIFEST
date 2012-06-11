@@ -6,6 +6,7 @@ lib/Parse/Dia/SQL/Const.pm
 lib/Parse/Dia/SQL/Logger.pm
 lib/Parse/Dia/SQL/Output.pm
 lib/Parse/Dia/SQL/Output/DB2.pm
+lib/Parse/Dia/SQL/Output/HTML.pm
 lib/Parse/Dia/SQL/Output/Informix.pm
 lib/Parse/Dia/SQL/Output/Ingres.pm
 lib/Parse/Dia/SQL/Output/MySQL.pm
@@ -19,7 +20,7 @@ lib/Parse/Dia/SQL/Output/Sybase.pm
 lib/Parse/Dia/SQL/Utils.pm
 LICENSE
 Makefile.PL
-MANIFEST
+MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
 README
@@ -88,6 +89,7 @@ t/688-output-mysql-myisam-get-sql.t
 t/689-output-db2-create-constraint-name.t
 t/689-output-mysql-innodb-get-sql-comment.t
 t/690-output-sqlite3-get-sql.t
+t/691-output-html-get-sql.t
 t/700-utils-load.t
 t/701-utils-mangle-name.t
 t/702-utils-make-name.t
