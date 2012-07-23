@@ -16,6 +16,7 @@ lib/Parse/Dia/SQL/Output/Oracle.pm
 lib/Parse/Dia/SQL/Output/Postgres.pm
 lib/Parse/Dia/SQL/Output/Sas.pm
 lib/Parse/Dia/SQL/Output/SQLite3.pm
+lib/Parse/Dia/SQL/Output/SQLite3fk.pm
 lib/Parse/Dia/SQL/Output/Sybase.pm
 lib/Parse/Dia/SQL/Utils.pm
 LICENSE
@@ -90,6 +91,7 @@ t/689-output-db2-create-constraint-name.t
 t/689-output-mysql-innodb-get-sql-comment.t
 t/690-output-sqlite3-get-sql.t
 t/691-output-html-get-sql.t
+t/692-output-sqlite3fk-get-sql.t
 t/700-utils-load.t
 t/701-utils-mangle-name.t
 t/702-utils-make-name.t

@@ -8,7 +8,7 @@ use Test::More;
 use File::Spec::Functions;
 use lib catdir qw ( blib lib );
 
-plan tests => 57;
+plan tests => 61;
 
 use_ok ('Parse::Dia::SQL');
 use_ok ('Parse::Dia::SQL::Const');

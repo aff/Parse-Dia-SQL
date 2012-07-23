@@ -81,6 +81,8 @@ The following databases are supported:
 
 =item SQLite3
 
+=item SQLite3fk (with foreign key support)
+
 =item Sybase
 
 =item MySQL InnoDB
@@ -194,7 +196,7 @@ use Parse::Dia::SQL::Output::MySQL;
 use Parse::Dia::SQL::Output::Oracle;
 use Parse::Dia::SQL::Output::Postgres;
 use Parse::Dia::SQL::Output::SQLite3;
-#use Parse::Dia::SQL::Output::SQLite3fk;
+use Parse::Dia::SQL::Output::SQLite3fk;
 use Parse::Dia::SQL::Output::Sas;
 use Parse::Dia::SQL::Output::Sybase;
 
@@ -349,6 +351,8 @@ sub get_output_instance {
     return Parse::Dia::SQL::Output::Sas->new(%param);
   } elsif ($self->{db} eq q{sqlite3}) {
     return Parse::Dia::SQL::Output::SQLite3->new(%param);
+  } elsif ($self->{db} eq q{sqlite3fk}) {
+    return Parse::Dia::SQL::Output::SQLite3fk->new(%param);
   } elsif ($self->{db} eq q{html}) {
     return Parse::Dia::SQL::Output::HTML->new(%param);
   }

@@ -30,15 +30,16 @@ use Parse::Dia::SQL::Logger;
 
 # TODO: Move constants to a separate module
 my %MAX_NAME_LEN = (
-  default  => 30,
-  db2      => 18,
-  html     => 64,
-  innodb   => 64,
-  mysql    => 64,
-  oracle   => 30,
-  postgres => 63,
-  sas      => 32,
-  sqlite3  => 60,
+  default   => 30,
+  db2       => 18,
+  html      => 64,
+  innodb    => 64,
+  mysql     => 64,
+  oracle    => 30,
+  postgres  => 63,
+  sas       => 32,
+  sqlite3   => 60,
+  sqlite3fk => 60,
 );
 
 # TODO: Make this a object variable

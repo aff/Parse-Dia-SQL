@@ -41,6 +41,7 @@ my @RDBMS = qw (
   postgres
   sas
   sqlite3
+  sqlite3fk
   sybase
 );
 
@@ -57,6 +58,7 @@ my %OUTPUT_CLASS = (
   'postgres'     => 'Parse::Dia::SQL::Output::Postgres',
   'sas'          => 'Parse::Dia::SQL::Output::SAS',
   'sqlite3'      => 'Parse::Dia::SQL::Output::SQLite3',
+  'sqlite3fk'    => 'Parse::Dia::SQL::Output::SQLite3fk',
   'sybase'       => 'Parse::Dia::SQL::Output::Sybase',
 );
 
