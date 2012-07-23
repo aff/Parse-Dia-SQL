@@ -18,6 +18,7 @@ my $db                   = undef;
 my $uml                  = undef;
 my $loglevel             = undef;
 my $backticks            = undef;
+my $htmlformat           = undef;
 
 GetOptions(
   "help|?"               => \$help,
@@ -27,6 +28,7 @@ GetOptions(
   "loglevel=s"           => \$loglevel,
   "backticks=i"          => \$backticks,
   "ignore_type_mismatch" => \$ignore_type_mismatch,
+  "htmlformat=s"         => \$htmlformat,
 ) or pod2usage(2);
 pod2usage(1) if $help;
 pod2usage(qq{Missing argument 'file'}) if !$file;
@@ -39,6 +41,7 @@ my $dia = Parse::Dia::SQL->new(
   uml                  => $uml,
   loglevel             => $loglevel,
   backticks            => $backticks
+  htmlformat           => $htmlformat,
 );
 print $dia->get_sql();
 
@@ -66,6 +69,7 @@ __END__
   loglevel               - Log verbosity, valid values are
                            DEBUG|INFO|WARN|ERROR|FATAL|TRACE|ALL|OFF.
   backticks              - Use `backtick` notation (mysql-innodb only).
+  htmlformat             - Optional custom format file (html only).
 
 =head1 DESCRIPTION
 

@@ -31,6 +31,7 @@ my %args = (
     'File::Spec::Functions'     => 0,
     'File::Temp'                => 0,
     'File::Find'                => 0,
+    'HTML::Lint'                => 0,
     'Getopt::Long'              => 0,
     'IO::Uncompress::Gunzip'    => 0,
     'Log::Log4perl'             => 0,

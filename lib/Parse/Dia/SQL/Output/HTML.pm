@@ -11,7 +11,10 @@ Parse::Dia::SQL::Output::HTML - Create HTML documentation.
 =head1 SYNOPSIS
 
     use Parse::Dia::SQL;
-    my $dia = Parse::Dia::SQL->new(file => 'foo.dia', db => 'html'[, format=>{formatfile}]);
+    my $dia = Parse::Dia::SQL->new(
+      file => 'foo.dia',
+      db   => 'html' [ , htmlformat => {formatfile} ]
+    );
     print $dia->get_sql();
 
 =head1 DESCRIPTION
@@ -19,7 +22,7 @@ Parse::Dia::SQL::Output::HTML - Create HTML documentation.
 This sub-class creates HTML formatted database documentation.
 
 HTML formatting is controlled by templates selected with the optional
-I<format> parameter which supplies a format file. See L</"HTML
+I<htmlformat> parameter which supplies a format file. See L</"HTML
 formats"> for more.
 
 The generated HTML is intended to be useful rather than beautiful.
@@ -741,8 +744,8 @@ sub set_html_template {
   # Standard HTML bits
   $self->{htmltemplate}{htmlpreamble} = "<html><head>\n<title>Database documentation: {filename}</title>";
   $self->{htmltemplate}{htmlcomment} = "\n<!-- {htmlcomment} -->\n";
-  $self->{htmltemplate}{htmlstartbody} = '<body>';
-  $self->{htmltemplate}{htmlendbody} = '<p style="font-size:75%">Generated at {gentime}.</p></body>';
+  $self->{htmltemplate}{htmlstartbody} = '</head><body>';
+  $self->{htmltemplate}{htmlendbody} = '<p style="font-size:75%">Generated at {gentime}.</p>';
   $self->{htmltemplate}{htmlend} = '</body></html>';
 
   # List of tables
@@ -819,7 +822,7 @@ END
   if ( $format) {
     local $/=undef; # so we can slurp the whole file as one lump
     open my $fh, '<', $format or die "Couldn't open format file: '$format' $!\n";
-    my $contents = $fh;
+    my $contents = <$fh>;
     close $fh;
     my $tag;
     my $htmlelement;
@@ -872,7 +875,7 @@ I<Default>: \n<!-- {htmlcomment} -->\n
 
 The start body html tag.
 
-I<Default>: <body>
+I<Default>: </head><body>
 
 
 =head3 htmlendbody
@@ -881,7 +884,7 @@ The end body html tag.
 
 I<Placeholders>: gentime
 
-I<Default>: <p style="font-size:75%">Generated at {gentime}.</p></body>
+I<Default>: <p style="font-size:75%">Generated at {gentime}.</p>
 
 
 =head3 htmlend
@@ -1116,8 +1119,6 @@ The other template elements are the same as the default.
 =head1 TODO
 
 Things that might get added in future versions:
-
-Better templating mechanism.
 
 Views are not currently documented.
 

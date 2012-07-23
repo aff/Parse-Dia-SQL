@@ -194,10 +194,11 @@ use Parse::Dia::SQL::Output::MySQL;
 use Parse::Dia::SQL::Output::Oracle;
 use Parse::Dia::SQL::Output::Postgres;
 use Parse::Dia::SQL::Output::SQLite3;
+#use Parse::Dia::SQL::Output::SQLite3fk;
 use Parse::Dia::SQL::Output::Sas;
 use Parse::Dia::SQL::Output::Sybase;
 
-our $VERSION = '0.20_01';
+our $VERSION = '0.20_02';
 
 my $UML_ASSOCIATION  = 'UML - Association';
 my $UML_SMALLPACKAGE = 'UML - SmallPackage';
