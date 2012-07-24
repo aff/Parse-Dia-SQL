@@ -764,7 +764,7 @@ END
 
   # Table: a single table details, mostly placeholders for individual elements
   $self->{htmltemplate}{table} = <<"END";
-<h3>Table: {tablename}<a name='{tablename}'/></h3>
+<h3>Table: <a name='{tablename}'>{tablename}</a></h3>
 {tablecomment}
 {refto}
 {refby}
