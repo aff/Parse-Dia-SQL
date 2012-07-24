@@ -1,6 +1,6 @@
 Revision history for Perl module Parse::Dia::SQL.
 
-0.21 Mon Jul 23 12:53:23 CEST 2012
+0.21 Tue Jul 24 09:40:21 CEST 2012
     - Added 'html' output options (thanks to Peter Langton).
       Check generated html with XML::DOM::Parser and HTML::Lint.
     - RT #77115 - Added SQLite3fk emitter that supports foreign key
