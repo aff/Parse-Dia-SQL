@@ -23,7 +23,6 @@ LICENSE
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
-META.yml
 README
 t/000-load.t
 t/001-new.t

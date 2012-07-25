@@ -1,6 +1,4 @@
 
-  $Id: TODO,v 1.15 2010/05/04 06:13:28 aff Exp $
-
 - Implement support for Dia's new Database shape.
 
 - Warn if there are typemaps for databases in the model that are not
