@@ -23,6 +23,7 @@ my %args = (
       qw [Parse Dia SQL DDL RDBMS DB2 Informix Ingres InnoDB MyISAM MySQL Oracle Postgres SQLite3 Sas Sybase]
     ],
   },
+  BUILD_REQUIRES => { 'CPAN::Meta' => 0, },
 
   PREREQ_PM => {
     'Data::Dumper'              => 0,
