@@ -40,7 +40,7 @@ my $dia = Parse::Dia::SQL->new(
   ignore_type_mismatch => $ignore_type_mismatch,
   uml                  => $uml,
   loglevel             => $loglevel,
-  backticks            => $backticks
+  backticks            => $backticks,
   htmlformat           => $htmlformat,
 );
 print $dia->get_sql();
