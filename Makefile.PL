@@ -18,7 +18,7 @@ my %args = (
   LICENSE       => 'gpl',
   META_MERGE    => {
     resources =>
-      { repository => 'http://tedia2sql.tigris.org/source/browse/tedia2sql/', },
+      { repository => 'https://github.com/aff/Parse-Dia-SQL', },
     keywords => [
       qw [Parse Dia SQL DDL RDBMS DB2 Informix Ingres InnoDB MyISAM MySQL Oracle Postgres SQLite3 Sas Sybase]
     ],
