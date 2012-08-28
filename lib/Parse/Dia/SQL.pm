@@ -167,7 +167,7 @@ This program is released under the GNU General Public License.
 
 =head1 TERMINOLOGY
 
-By I<database> we mean relational database managment system (RDBMS).
+By I<database> we mean relational database management system (RDBMS).
 
 =cut
 
@@ -200,7 +200,7 @@ use Parse::Dia::SQL::Output::SQLite3fk;
 use Parse::Dia::SQL::Output::Sas;
 use Parse::Dia::SQL::Output::Sybase;
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 my $UML_ASSOCIATION  = 'UML - Association';
 my $UML_SMALLPACKAGE = 'UML - SmallPackage';

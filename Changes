@@ -1,6 +1,10 @@
 Revision history for Perl module Parse::Dia::SQL.
 
-0.22 
+0.23 Tue Aug 28 08:28:19 CEST 2012
+    - RT #79218 Spelling patch from debian downstream (Thanks to
+      Gregor Herrmann).
+
+0.22 Tue Aug  7 09:00:00 CEST 2012
     - RT #78818 syntax error fixed (thanks to openback).
     - Makefile.PL - added BUILD_REQUIRES => { 'CPAN::Meta' => 0, },
       to ensure META.yml is created during build.

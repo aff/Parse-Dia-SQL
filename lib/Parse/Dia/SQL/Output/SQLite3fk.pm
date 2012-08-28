@@ -275,7 +275,7 @@ CLASS:
 
 =head2 _get_fk_drop
 
-Foreign key enforcement is embedded in the table definitions for SQLite, so no output is requried here.
+Foreign key enforcement is embedded in the table definitions for SQLite, so no output is required here.
 
 =cut
 
@@ -324,7 +324,7 @@ sub get_permissions_drop {
 
 =head2 _get_create_association_sql
 
-Foreign key enforcement is embedded in the table definitions for SQLite, so no output is requried here.
+Foreign key enforcement is embedded in the table definitions for SQLite, so no output is required here.
 
 =cut
 
