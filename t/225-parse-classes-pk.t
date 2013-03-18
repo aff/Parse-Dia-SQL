@@ -26,7 +26,7 @@ cmp_ok(scalar(@$classes), q{==}, 1, q{Expect 1 class});
 
 # Hash with class/view names as keys and primary key as (hashref) elements
 my %pk = (
-    bar => [ [ 'foo', 'int', '', '2', '' ] ],
+    bar => [ [ 'foo', 'int', '', '2', '', 'false' ] ],
 );
 
 

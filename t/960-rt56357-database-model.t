@@ -9,21 +9,30 @@ use Test::Exception;
 use File::Spec::Functions;
 use lib catdir qw ( blib lib );
 
-plan tests => 4;
- 
-use lib q{lib};
-use_ok ('Parse::Dia::SQL');
+plan tests => 5;
 
-my $diasql =
-  Parse::Dia::SQL->new(file => catfile(qw(t data rt56357.dia)), db => 'postgres');
+use lib q{lib};
+use_ok('Parse::Dia::SQL');
+
+my $diasql = Parse::Dia::SQL->new(
+  file => catfile(qw(t data rt56357.dia)),
+  db   => 'postgres'
+);
 isa_ok($diasql, q{Parse::Dia::SQL}, q{Expect a Parse::Dia::SQL object});
 can_ok($diasql, q{get_sql});
 
 my $sql = undef;
-lives_ok(
-		 sub {  $sql = $diasql->get_sql() },
-		 q{get_sql should live on supported model type 'Database - Table'}
-		);
+lives_ok(sub { $sql = $diasql->get_sql() },
+  q{get_sql should live on supported model type 'Database - Table'});
+
+diag($sql);
+
+like($sql, qr/.*
+create \s* table \s* bar \s* \( \s* 
+ \s* foo     \s+ int \s+  not \s+ null \s*, \s* 
+ \s* seconds \s+ int \s+  not \s+ null \s*, \s* 
+ \s* constraint \s+ pk_bar \s+ primary \s+ key \s+ \( \s* foo \s* \) \s* \) 
+.*/six);
 
 __END__
 

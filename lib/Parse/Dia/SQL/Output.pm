@@ -766,12 +766,15 @@ sub _get_create_table_sql {
     $self->{log}->debug("column before: " . join(q{,}, @$column));
 
     # Field sequence:
-    my ($col_name, $col_type, $col_val, $col_vis, $col_com) = @$column;
+    my ($col_name, $col_type, $col_val, $col_vis, $col_com, $col_nullable) = @$column;
 
-    # Add 'not null' if field is primary key
+    # Add 'not null' if field is primary key or marked "not nullable"
+    # (Dia database shape only)
     if ($col_vis == 2) {
       $col_val = 'not null';
-    }
+    } elsif ($col_nullable) {
+      $col_val = 'not null';
+	}
 
     # Add column name to list of primary keys if $col_vis == 2
     push @primary_keys, $col_name if ($col_vis == 2);

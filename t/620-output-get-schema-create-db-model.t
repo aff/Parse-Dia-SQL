@@ -45,7 +45,7 @@ my $create_table = $subclass->get_schema_create();
 like($create_table, qr|.*
   create \s+ table \s+ man \s* \(
      \s* id \s+ int \s+ not \s+ null \s* , 
-     \s* name \s+ varchar \s* \( \s* 32 \s* \) \s* ,
+     \s* name \s+ varchar \s* \( \s* 32 \s* \) \s+ not \s+ null \s* , 
      \s* constraint \s+ pk_\w+ \s+ primary \s+ key \s* \(id\) \s*
   \) \s* (;)?
 .*|six, q{Check syntax for sql create table man});

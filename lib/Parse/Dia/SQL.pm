@@ -200,7 +200,7 @@ use Parse::Dia::SQL::Output::SQLite3fk;
 use Parse::Dia::SQL::Output::Sas;
 use Parse::Dia::SQL::Output::Sybase;
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 
 my $UML_ASSOCIATION  = 'UML - Association';
 my $UML_SMALLPACKAGE = 'UML - SmallPackage';
@@ -880,6 +880,11 @@ sub _parse_database_table {
       ->get_value_from_object( $singleAttrib, "dia:attribute", "name", "comment",
       "string", 1 );
 
+    my $attribNullable =
+      $self->{utils}
+      ->get_value_from_object( $singleAttrib, "dia:attribute", "name", "nullable",
+      "boolean", 1 );
+
 	# Strip newlines from comments except for HTML output
     $attribComment =~ s/\n/ /g if ($self->{db} ne q{html});
 	chomp($attribComment); # Always strip any trailing newlines
@@ -889,7 +894,7 @@ sub _parse_database_table {
     );
     my $att = [
       $attribName,       $attribType, $attribVal,
-      $attrib_is_primary_key, $attribComment
+      $attrib_is_primary_key, $attribComment, $attribNullable
     ];
     push @{ $classLookup->{attList} }, $att;
 
