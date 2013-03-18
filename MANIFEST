@@ -1,6 +1,7 @@
 AUTHORS
 bin/parsediasql
 Changes
+installer/parsediasql-setup.nsi
 lib/Parse/Dia/SQL.pm
 lib/Parse/Dia/SQL/Const.pm
 lib/Parse/Dia/SQL/Logger.pm
