@@ -22,7 +22,7 @@ lib/Parse/Dia/SQL/Output/Sybase.pm
 lib/Parse/Dia/SQL/Utils.pm
 LICENSE
 Makefile.PL
-MANIFEST			This list of files
+MANIFEST
 MANIFEST.SKIP
 README
 t/000-load.t
@@ -50,6 +50,7 @@ t/610-output-getinstance.t
 t/611-output-format-columns.t
 t/612-output-get-comment.t
 t/620-output-get-schema-create-col-comment.t
+t/620-output-get-schema-create-db-model-nullable.t
 t/620-output-get-schema-create-db-model.t
 t/620-output-get-schema-create-many-to-many.t
 t/620-output-get-schema-create.t
@@ -124,6 +125,7 @@ t/data/long_fk_name.dia
 t/data/many_to_many.097.dia
 t/data/many_to_many.dia
 t/data/non-latin1-chars.dia
+t/data/nullable.dia
 t/data/rt50906.dia
 t/data/rt51433.dia
 t/data/rt52755.dia
