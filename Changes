@@ -1,5 +1,8 @@
 Revision history for Perl module Parse::Dia::SQL.
 
+0.25 Wed Mar 20 09:29:29 CET 2013
+    - Fixed bug in "nullable" implementation introducted in 0.24.
+
 0.24 Mon Mar 18 08:22:54 CET 2013
     - Added previously unsupported "nullable" feature for non-primary
       key columns when using Database shape (added in 0.15).
