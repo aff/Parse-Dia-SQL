@@ -772,9 +772,9 @@ sub _get_create_table_sql {
     # (Dia database shape only)
     if ($col_vis == 2) {
       $col_val = 'not null';
-    } elsif ($col_nullable) {
+    } elsif ($col_nullable eq q{false}) {
       $col_val = 'not null';
-	}
+    }
 
     # Add column name to list of primary keys if $col_vis == 2
     push @primary_keys, $col_name if ($col_vis == 2);

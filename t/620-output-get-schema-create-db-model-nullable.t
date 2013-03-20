@@ -46,10 +46,10 @@ like($create_table, qr|.*
   create \s+ table \s+ bar \s* \(
      \s* id \s+ int \s+ not \s+ null \s* , 
      \s* col1_nullable \s+ int \s* ,
-     \s* col2_nullable \s+ int not \s+ null \s* ,
+     \s* col2_not_nullable \s+ int \s+ not \s+ null \s* ,
      \s* constraint \s+ pk_\w+ \s+ primary \s+ key \s* \(id\) \s*
   \) \s* (;)?
-.*|six, q{Check syntax for sql create table bar});
+.*|six, q{Check syntax for sql create table bar with nullable property. (1 col nullable, 1 col not null)});
 
 
 __END__
