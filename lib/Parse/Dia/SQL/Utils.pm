@@ -545,11 +545,11 @@ sub get_base_type {
 			$self->{log}->info(qq{Replaced $typeName with integer}) if $self->{log}->is_info();
       return 'integer';
     }
-    if ( lc($typeName) eq 'int2' ) {
+    if ( lc($typeName) eq 'smallserial' or lc($typeName) eq 'int2' ) {
 			$self->{log}->info(qq{Replaced $typeName with smallint}) if $self->{log}->is_info();
       return 'smallint';
     }
-    if ( lc($typeName) eq 'int8' ) {
+    if ( lc($typeName) eq 'bigserial' or lc($typeName) eq 'int8' ) {
 			$self->{log}->info(qq{Replaced $typeName with bigint}) if $self->{log}->is_info();
       return 'bigint';
     }

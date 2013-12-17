@@ -8,7 +8,7 @@ use Test::More;
 use File::Spec::Functions;
 use lib catdir qw ( blib lib );
 
-plan tests => 7;
+plan tests => 9;
 
 use lib q{lib};
 use_ok ('Parse::Dia::SQL::Utils');
@@ -19,9 +19,11 @@ isa_ok($utils, 'Parse::Dia::SQL::Utils');
 
 # make_name
 is($utils->get_base_type('int2', 'postgres'),  'smallint');
+is($utils->get_base_type('smallserial', 'postgres'),  'smallint');
 is($utils->get_base_type('int4', 'postgres'),  'integer');
 is($utils->get_base_type('serial', 'postgres'),  'integer');
 is($utils->get_base_type('int8', 'postgres'),  'bigint');
+is($utils->get_base_type('bigserial', 'postgres'),  'bigint');
 
 is($utils->get_base_type('int2', 'mysql-myisam'),  'int2');
 
