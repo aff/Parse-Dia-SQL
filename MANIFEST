@@ -116,6 +116,7 @@ t/953-rt53783-sqlite3.t
 t/960-rt56357-database-model.t
 t/961-rt57182-charset.t
 t/962-rt57842-postsgres-int.t
+t/963-rt66031.t
 t/data/association_dia_0_97.dia
 t/data/db-model-fk.dia
 t/data/db2.pre.dupe.dia
@@ -132,6 +133,7 @@ t/data/rt52755.dia
 t/data/rt53783.dia
 t/data/rt56357.dia
 t/data/rt57842.dia
+t/data/rt66031.dia
 t/data/table.col.comment.dia
 t/data/table_output_options.dia
 t/data/TestERD.dia
