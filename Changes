@@ -1,5 +1,10 @@
 Revision history for Perl module Parse::Dia::SQL.
 
+0.26 Tue Dec 17 22:07:00 CET 2013
+   - RT #66031 dia changed naming from aggregate_a/b to assoc_type.
+   - added support for bigserial & smallserial under postgresql. 
+   (Thanks to Felix Ostmann)
+
 0.25 Wed Mar 20 09:29:29 CET 2013
     - Fixed bug in "nullable" implementation introducted in 0.24.
 
