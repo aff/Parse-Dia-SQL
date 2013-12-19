@@ -1262,7 +1262,7 @@ sub _parse_association {
         $leftEnd{role} = $self->{utils}->get_string_from_node($currentNode);
       } elsif ( $nodeAttrName eq 'role_b' ) {
         $rightEnd{role} = $self->{utils}->get_string_from_node($currentNode);
-      } elsif ( $self->{uml} && $nodeAttrName eq 'assoc_type' && $assocDirection == 2 ) {
+      } elsif ( $self->{uml} && $nodeAttrName eq 'assoc_type' && $assocDirection != 2 ) {
         $leftEnd{aggregate} = $self->{utils}->get_num_from_node($currentNode);
       } elsif ( $self->{uml} && $nodeAttrName eq 'assoc_type' ) {
         $rightEnd{aggregate} = $self->{utils}->get_num_from_node($currentNode);
