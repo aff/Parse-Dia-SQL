@@ -1,4 +1,7 @@
 Revision history for Perl module Parse::Dia::SQL.
+0.27 Fri Jan  3 14:37:55 CET 2014
+   - RT #91654 Spelling mistake. Thanks to gregor herrmann and perl 
+     debian team.
 
 0.26 Tue Dec 17 22:07:00 CET 2013
    - RT #66031 dia changed naming from aggregate_a/b to assoc_type.
