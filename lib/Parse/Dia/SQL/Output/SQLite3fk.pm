@@ -304,7 +304,7 @@ sub _get_drop_index_sql {
 
 =head2 get_permissions_create
 
-SQLite doesn't support permissions, so supress this output.
+SQLite doesn't support permissions, so suppress this output.
 
 =cut
 
@@ -314,7 +314,7 @@ sub get_permissions_create {
 
 =head2 get_permissions_drop
 
-SQLite doesn't support permissions, so supress this output.
+SQLite doesn't support permissions, so suppress this output.
 
 =cut
 
