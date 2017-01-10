@@ -48,6 +48,7 @@ eval { my $doc = $parser->parse($xml); };
 # Check the HTML with HTML::Lint
 my $lint = HTML::Lint->new;
 $lint->parse( $sql );
+$lint->eof();
 my $error_count = $lint->errors;
 ($error_count > 0)
   ? fail("Failed test using HTML::Lint - invalid HTML")
