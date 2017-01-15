@@ -1,4 +1,12 @@
 Revision history for Perl module Parse::Dia::SQL.
+
+0.29 Sun Jan 15 15:44:09 2017 +0100
+    RT #119853 Fix spelling mistakes in the POD. 
+    Thanks to gregor herrmann, Debian Perl Group.
+
+0.28 Tue Jan 10 20:03:04 2017 +0100
+    Updated due to misuse of HTML::Lint 2.26.
+
 0.27 Fri Jan  3 14:37:55 CET 2014
    - RT #91654 Spelling mistake. Thanks to gregor herrmann and perl 
      debian team.
