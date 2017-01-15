@@ -155,7 +155,7 @@ sub _get_create_table_sql {
 
 =head2 _create_pk_string
 
-Override default functon to include foreign key clauses
+Override default function to include foreign key clauses
 
 =cut
 
@@ -197,7 +197,7 @@ sub _create_pk_string {
 
 =head2 get_schema_drop
 
-Generate drop table statments for all tables using SQLite syntax:
+Generate drop table statements for all tables using SQLite syntax:
 
   drop table {foo} if exists
 
@@ -235,7 +235,7 @@ CLASS:
 
 =head2 get_view_drop
 
-Generate drop view statments for all tables using SQLite syntax:
+Generate drop view statements for all tables using SQLite syntax:
 
   drop view {foo} if exists
 
