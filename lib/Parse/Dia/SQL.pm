@@ -1262,10 +1262,8 @@ sub _parse_association {
         $leftEnd{role} = $self->{utils}->get_string_from_node($currentNode);
       } elsif ( $nodeAttrName eq 'role_b' ) {
         $rightEnd{role} = $self->{utils}->get_string_from_node($currentNode);
-      } elsif ( $self->{uml} && $nodeAttrName eq 'assoc_type' && $assocDirection == 2 ) {
+      } elsif ( $nodeAttrName eq 'assoc_type' ) {
         $leftEnd{aggregate} = $self->{utils}->get_num_from_node($currentNode);
-      } elsif ( $self->{uml} && $nodeAttrName eq 'assoc_type' ) {
-        $rightEnd{aggregate} = $self->{utils}->get_num_from_node($currentNode);
       } elsif ( $nodeAttrName eq 'class_scope_a' ) {
         $leftEnd{class_scope} = $self->{utils}->get_string_from_node($currentNode);
       } elsif ( $nodeAttrName eq 'class_scope_b' ) {
@@ -1281,6 +1279,20 @@ sub _parse_association {
     }
 
     $i++;
+  }
+
+  # apply aggregate attribute to proper Left/Right End. currently it
+  # is stored in LeftEnd.
+  if ( $version == 2 ) {
+      if ( $self->{uml} ) {
+	  $rightEnd{aggregate} = delete $leftEnd{aggregate}
+	  unless $assocDirection == 2;
+      }
+
+      else {
+	  $rightEnd{aggregate} = delete $leftEnd{aggregate}
+	  if $assocDirection == 2;
+      }
   }
 
   # parse out the 'connections', that is, the classes on either end
