@@ -164,7 +164,7 @@ sub _create_pk_string {
   my $sqlstr = '';
   my $sep = '';
 
-  $sqlstr .= $self->SUPER::_create_pk_string($tablename, @pks);
+  $sqlstr .= $self->SUPER::_create_pk_string($tablename, @pks) || '';
 
    my $fk = '';
   # Find the foriegn keys for this table
