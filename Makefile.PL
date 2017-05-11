@@ -1,6 +1,3 @@
-
-# $Id: Makefile.PL,v 1.5 2010/04/15 20:41:00 aff Exp $
-
 use strict;
 use warnings;
 
@@ -29,11 +26,12 @@ my %args = (
     'Data::Dumper'              => 0,
     'Digest::MD5'               => 0,
     'Fatal'                     => 0,
+    'File::Find'                => 0,
     'File::Spec::Functions'     => 0,
     'File::Temp'                => 0,
-    'File::Find'                => 0,
-    'HTML::Lint'                => 0,
     'Getopt::Long'              => 0,
+    'HTML::Lint'                => 0,
+    'IO::All'                   => 0,
     'IO::Uncompress::Gunzip'    => 0,
     'Log::Log4perl'             => 0,
     'POSIX'                     => 0,
