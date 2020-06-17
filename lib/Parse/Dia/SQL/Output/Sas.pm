@@ -46,6 +46,21 @@ sub new {
   return $self;
 }
 
+=head2 _get_drop_schema_sql
+
+Sas do not support keyword 'if exists' in 'drop table' statement
+
+=cut
+
+sub _get_drop_schema_sql {
+  my ($self, $tablename) = @_;
+
+  return
+      qq{drop table $tablename}
+    . $self->{end_of_statement}
+    . $self->{newline};
+}
+
 
 1;
 
