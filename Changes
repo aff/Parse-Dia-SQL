@@ -1,5 +1,10 @@
 Revision history for Perl module Parse::Dia::SQL.
 
+0.31 Wed Jun 17 22:29:02 CEST 2020
+   Merged PR "Support `drop table if exists`"
+   Thanks to biaocy
+   https://github.com/aff/Parse-Dia-SQL/pull/9
+
 0.30 Thu, 11 May 2017 19:09:19 +0200
     Set "aggregate" attribute for Dia version=2 associations when 
     in ERD mode. Thanks to djerius@cpan.org
