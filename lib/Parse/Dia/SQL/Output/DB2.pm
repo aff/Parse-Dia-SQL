@@ -118,6 +118,21 @@ sub _create_constraint_name {
   #  return $self->{utils}->mangle_name( $constraint_name, $self->{object_name_max_length} - 4 );
 }
 
+=head2 _get_drop_schema_sql
+
+DB2 do not support keyword 'if exists' in 'drop table' statement
+
+=cut
+
+sub _get_drop_schema_sql {
+  my ($self, $tablename) = @_;
+
+  return
+      qq{drop table $tablename}
+    . $self->{end_of_statement}
+    . $self->{newline};
+}
+
 1;
 
 __END__

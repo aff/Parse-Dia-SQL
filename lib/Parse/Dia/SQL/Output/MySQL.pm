@@ -72,43 +72,6 @@ sub _get_drop_index_sql {
     . $self->{newline};
 }
 
-=head2 get_schema_drop
-
-create drop table for all tables using MySQL syntax:
-
-  drop table t if exists
-
-=cut
-
-sub get_schema_drop {
-  my $self   = shift;
-  my $sqlstr = '';
-
-  return unless $self->_check_classes();
-
-CLASS:
-  foreach my $object (@{ $self->{classes} }) {
-    next CLASS if ($object->{type} ne q{table});
-
-    # Sanity checks on internal state
-    if (!defined($object)
-      || ref($object) ne q{HASH}
-      || !exists($object->{name}))
-    {
-      $self->{log}
-        ->error(q{Error in table input - cannot create drop table sql!});
-      next;
-    }
-
-    $sqlstr .=
-        qq{drop table if exists }
-      . $self->_quote_identifier($object->{name})
-      . $self->{end_of_statement}
-      . $self->{newline};
-  }
-
-  return $sqlstr;
-}
 
 1;
 

@@ -550,15 +550,21 @@ CLASS:
       next;
     }
 
-    $sqlstr .=
-        qq{drop table }
-      . $object->{name}
-      . $self->{end_of_statement}
-      . $self->{newline};
+    $sqlstr .= $self->_get_drop_schema_sql($object->{name});
   }
 
   return $sqlstr;
 
+}
+
+sub _get_drop_schema_sql {
+  my ($self, $tablename) = @_;
+
+  return
+      qq{drop table if exists }
+    . $self->_quote_identifier($tablename)
+    . $self->{end_of_statement}
+    . $self->{newline};
 }
 
 # Create revoke sql
