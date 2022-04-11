@@ -366,7 +366,7 @@ C<type> is the operation C<GRANT>, C<REVOKE> etc
 
 C<name> is the permission name C<SELECT>, C<INSERT> etc
 
-C<list of roles> is the set of datbase roles affected.
+C<list of roles> is the set of database roles affected.
 
 =head3 Warning
 

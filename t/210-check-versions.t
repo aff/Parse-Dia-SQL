@@ -29,7 +29,7 @@ ok(defined $pds->_check_object_version('UML - Component', 0), q{UML - Component 
 ok(defined $pds->_check_object_version('UML - Note', 0), q{UML - Note 0});
 ok(defined $pds->_check_object_version('UML - SmallPackage', 0), q{UML - SmallPackage 0});
 
-# negative tests - unsupported verions
+# negative tests - unsupported versions
 ok(!defined $pds->_check_object_version('UML - Association', 3), q{UML - Association 3});
 
 ok(!defined $pds->_check_object_version('UML - Class', 1), q{UML - Class 1});

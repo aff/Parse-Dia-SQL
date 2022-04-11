@@ -648,7 +648,7 @@ sub make_name {
     }
   }
 
-  # Remove dot, alows using postgres sql schemas - table name like shop.product
+  # Remove dot, allows using postgres sql schemas - table name like shop.product
   if ( $self->{db} eq "postgres" ) {
     foreach my $p (@parts) {
       $p =~ s/\.//g;
