@@ -67,7 +67,7 @@ Includes foreign key support of the form
 
   foreign key(thisColumn)  references thatTable(thatColumn) {action}
   
-Where {action} is the optional contraint condition, such as 'on delete cascade' exactly as entered in the diagram.
+Where {action} is the optional constraint condition, such as 'on delete cascade' exactly as entered in the diagram.
 
 =head3 autoupdate triggers
 
@@ -167,7 +167,7 @@ sub _create_pk_string {
   $sqlstr .= $self->SUPER::_create_pk_string($tablename, @pks) || '';
 
    my $fk = '';
-  # Find the foriegn keys for this table
+  # Find the foreign keys for this table
   if ($self->_check_associations()) {
     foreach my $object (@{ $self->{associations} }) {
         my ( $table_name, $constraint_name, $key_column, $ref_table, $ref_column, $constraint_action ) = @{$object};

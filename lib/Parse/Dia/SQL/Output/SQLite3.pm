@@ -329,7 +329,7 @@ Create the foreign key enforcement triggers using SQLite syntax:
 Because SQLite doesn't natively enforce foreign key constraints (see L<http://www.sqlite.org/omitted.html>), 
 we use triggers to emulate this behaviour.
 
-The trigger names are the default contraint name (something like I<child_table>_fk_I<child_fkcolumn>) with suffixes described below.
+The trigger names are the default constraint name (something like I<child_table>_fk_I<child_fkcolumn>) with suffixes described below.
 
 =over
 
@@ -391,7 +391,7 @@ Note that cascading updates B<don't work>.
 
 I<constraint_name>_bdparent_tr
 
-The default behaviour can be modified through the contraint (in the multiplicity field) of the association.
+The default behaviour can be modified through the constraint (in the multiplicity field) of the association.
 
 =head4 Default (On Delete Restrict)
 

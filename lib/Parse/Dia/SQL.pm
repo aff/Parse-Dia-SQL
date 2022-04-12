@@ -1874,7 +1874,7 @@ sub generate_one_to_any_association {
   }
   else {
 
-    $self->{log}->warn( "No FK attibute in specified in $assocName");
+    $self->{log}->warn( "No FK attribute in specified in $assocName");
   # TODO: Implement the below method:
     #$fkEndKey = fkNamesFromAttList( $pkClassLookup->{name}, $pkAtts );
   }
